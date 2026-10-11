@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>welcome to cave</title>
+  <title>welcome to CAVE</title>
 
-  <!-- High-end luxury calligraphy & sans fonts -->
+  <!-- Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Inter:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #030305;
+      --bg: #040407;
       --accent: #a855f7;
       --accent-bright: #c084fc;
+      --green: #22c55e;
     }
 
     * {
@@ -34,100 +35,146 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       transition: opacity 0.35s ease, filter 0.35s ease;
       position: relative;
+      padding: 24px 16px;
     }
 
-    /* Subtle ambient dark violet glow */
+    /* Ambient lighting */
     .ambient-glow {
       position: absolute;
-      width: min(85vw, 600px);
-      height: min(60vw, 360px);
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, rgba(3, 3, 5, 0) 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(90vw, 650px);
+      height: min(65vw, 420px);
+      background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.16) 0%, rgba(99, 102, 241, 0.08) 45%, rgba(4, 4, 7, 0) 75%);
       pointer-events: none;
       z-index: 0;
+      filter: blur(24px);
     }
 
-    .stage {
+    .container {
       position: relative;
       z-index: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      text-align: center;
       width: 100%;
       max-width: 900px;
-      padding: 20px;
     }
 
-    /* Handwriting Canvas */
-    #caveCanvas {
+    /* Subtle top badge */
+    .network-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(0.68rem, 2vw, 0.78rem);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: clamp(18px, 4vh, 32px);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .network-badge .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green);
+    }
+
+    /* Canvas stage container: perfectly locked aspect ratio */
+    .canvas-box {
       width: 100%;
-      max-width: 820px;
-      height: auto;
-      max-height: 220px;
-      display: block;
-      filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.3));
+      max-width: 840px;
+      aspect-ratio: 16 / 4.8;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    /* Clean enter button container */
-    .btn-wrap {
-      margin-top: clamp(24px, 5vh, 44px);
+    @media (max-width: 580px) {
+      .canvas-box {
+        aspect-ratio: 16 / 5.8;
+      }
+    }
+
+    #cursiveCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: drop-shadow(0 0 14px rgba(168, 85, 247, 0.32));
+    }
+
+    /* Button wrapper */
+    .btn-container {
+      margin-top: clamp(28px, 5vh, 48px);
       opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(14px) scale(0.98);
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
       pointer-events: none;
     }
 
-    .btn-wrap.show {
+    .btn-container.show {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
       pointer-events: auto;
     }
 
-    /* Minimalist luxury button */
+    /* Executive CTA button */
     .enter-btn {
-      background: #09090e;
-      color: #f4f4f5;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      padding: clamp(12px, 2.8vw, 15px) clamp(30px, 6vw, 46px);
-      font-size: clamp(0.85rem, 2.2vw, 0.98rem);
+      position: relative;
+      background: linear-gradient(135deg, rgba(24, 24, 34, 0.95), rgba(10, 10, 16, 0.95));
+      color: #fafafa;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: clamp(13px, 3vw, 16px) clamp(32px, 6vw, 48px);
+      font-size: clamp(0.9rem, 2.2vw, 1.05rem);
       font-weight: 700;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       border-radius: 9999px;
       cursor: pointer;
+      backdrop-filter: blur(10px);
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.7),
+        inset 0 1px 1px rgba(255, 255, 255, 0.25),
+        0 0 0 1px rgba(168, 85, 247, 0.1);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       display: inline-flex;
       align-items: center;
       gap: 10px;
       outline: none;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.15);
-      transition: all 0.22s ease;
+    }
+
+    .enter-btn .arrow-icon {
+      font-size: 1rem;
+      transition: transform 0.25s ease;
+      color: var(--accent-bright);
     }
 
     .enter-btn:hover {
       border-color: var(--accent);
+      box-shadow: 
+        0 12px 35px rgba(0, 0, 0, 0.8),
+        0 0 32px rgba(168, 85, 247, 0.55),
+        inset 0 1px 1px rgba(255, 255, 255, 0.45);
+      transform: translateY(-2px) scale(1.03);
       color: #ffffff;
-      box-shadow: 0 0 28px rgba(168, 85, 247, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.3);
-      transform: translateY(-2px) scale(1.02);
+    }
+
+    .enter-btn:hover .arrow-icon {
+      transform: translateX(4px);
     }
 
     .enter-btn:active {
       transform: translateY(1px) scale(0.98);
-    }
-
-    .enter-btn svg {
-      width: 14px;
-      height: 14px;
-      stroke: var(--accent-bright);
-      stroke-width: 2.5;
-      fill: none;
-      transition: transform 0.2s ease;
-    }
-
-    .enter-btn:hover svg {
-      transform: translateX(3px);
     }
   </style>
 </head>
@@ -135,137 +182,174 @@
 
   <div class="ambient-glow"></div>
 
-  <div class="stage">
-    <!-- Smooth high-res stroke canvas -->
-    <canvas id="caveCanvas" width="1600" height="280"></canvas>
+  <div class="container">
+    <div class="network-badge">
+      <span class="dot"></span>
+      <span>Cronos Network // System Ready</span>
+    </div>
 
-    <!-- Clean CTA button -->
-    <div class="btn-wrap" id="btnWrap">
+    <!-- Scaled aspect-ratio canvas -->
+    <div class="canvas-box">
+      <canvas id="cursiveCanvas"></canvas>
+    </div>
+
+    <div class="btn-container" id="btnContainer">
       <button class="enter-btn" id="enterBtn" onclick="handleEnter()">
-        <span>Enter Cave</span>
-        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <span>Click to Enter</span>
+        <span class="arrow-icon">→</span>
       </button>
     </div>
   </div>
 
   <script>
-    const canvas = document.getElementById('caveCanvas');
+    const canvas = document.getElementById('cursiveCanvas');
     const ctx = canvas.getContext('2d');
-    const btnWrap = document.getElementById('btnWrap');
+    const box = document.querySelector('.canvas-box');
+    const btnContainer = document.getElementById('btnContainer');
 
-    // High DPI Retina Support
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = 1600 * dpr;
-    canvas.height = 280 * dpr;
-    ctx.scale(dpr, dpr);
+    let logicalWidth = 1200;
+    let logicalHeight = 360;
 
-    // Load custom signature font
-    document.fonts.load("italic 120px 'Alex Brush'").then(() => {
-      runPen();
+    function resizeCanvas() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = box.getBoundingClientRect();
+      
+      logicalWidth = rect.width;
+      logicalHeight = rect.height;
+
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+
+      ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Preload font and run
+    document.fonts.load("italic 100px 'Great Vibes'").then(() => {
+      runAnimation();
     }).catch(() => {
-      runPen();
+      runAnimation();
     });
 
-    function runPen() {
-      const phrasePrefix = "welcome to ";
-      const phraseCave = "Cave";
+    let animationComplete = false;
 
-      // Typographic measurements
-      ctx.font = "italic 400 108px 'Alex Brush', cursive";
-      const widthPrefix = ctx.measureText(phrasePrefix).width;
+    function runAnimation() {
+      const part1 = "welcome to ";
+      const part2 = "CAVE";
 
-      ctx.font = "italic 700 128px 'Alex Brush', cursive";
-      const widthCave = ctx.measureText(phraseCave).width;
-
-      const totalWidth = widthPrefix + widthCave;
-      const startX = (1600 - totalWidth) / 2;
-      const baselineY = 175;
-
-      const time1 = 1200; // time to write "welcome to "
-      const time2 = 1000; // time to write "Cave"
+      const time1 = 1200; // "welcome to "
+      const time2 = 1000; // bold "CAVE"
       const totalTime = time1 + time2;
       const startTime = performance.now();
 
-      function step(now) {
+      function frame(now) {
         const elapsed = now - startTime;
         const progressTotal = Math.min(elapsed / totalTime, 1);
 
-        ctx.clearRect(0, 0, 1600, 280);
+        ctx.clearRect(0, 0, logicalWidth, logicalHeight);
 
-        // 1. Write "welcome to " in refined silver cursive
+        // Dynamically scale font size based on current box width
+        const scaleFactor = Math.min(logicalWidth / 800, 1.25);
+        const fontSizeP1 = Math.max(48, Math.round(92 * scaleFactor));
+        const fontSizeP2 = Math.max(56, Math.round(112 * scaleFactor));
+
+        // Measure text accurately
+        ctx.font = `italic 400 ${fontSizeP1}px 'Great Vibes', cursive`;
+        const width1 = ctx.measureText(part1).width;
+
+        ctx.font = `italic 700 ${fontSizeP2}px 'Great Vibes', cursive`;
+        const width2 = ctx.measureText(part2).width;
+
+        const totalWidth = width1 + width2;
+        const startX = (logicalWidth - totalWidth) / 2;
+        const baselineY = logicalHeight / 2 + (fontSizeP1 * 0.28);
+
+        // 1. Draw "welcome to "
         const p1 = Math.min(elapsed / time1, 1);
         if (p1 > 0) {
           ctx.save();
           ctx.beginPath();
-          ctx.rect(startX - 10, 0, (widthPrefix + 20) * p1, 280);
+          ctx.rect(startX - 10, 0, (width1 + 18) * p1, logicalHeight);
           ctx.clip();
 
-          ctx.font = "italic 400 108px 'Alex Brush', cursive";
+          ctx.font = `italic 400 ${fontSizeP1}px 'Great Vibes', cursive, sans-serif`;
           ctx.textBaseline = "alphabetic";
 
-          // Delicate ink stroke
-          ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
-          ctx.lineWidth = 1.5;
-          ctx.strokeText(phrasePrefix, startX, baselineY);
+          ctx.shadowColor = "rgba(168, 85, 247, 0.35)";
+          ctx.shadowBlur = 10;
 
-          ctx.fillStyle = "rgba(226, 232, 240, 0.9)";
-          ctx.fillText(phrasePrefix, startX, baselineY);
+          ctx.strokeStyle = "rgba(226, 232, 240, 0.85)";
+          ctx.lineWidth = Math.max(1.8, 2.2 * scaleFactor);
+          ctx.strokeText(part1, startX, baselineY);
+
+          ctx.fillStyle = "#f8fafc";
+          ctx.fillText(part1, startX, baselineY);
           ctx.restore();
         }
 
-        // 2. Write "Cave" in bold illuminated calligraphy
+        // 2. Draw "CAVE" (Bold glowing highlight)
         if (elapsed > time1) {
           const p2 = Math.min((elapsed - time1) / time2, 1);
-          const caveX = startX + widthPrefix;
+          const caveX = startX + width1;
 
           ctx.save();
           ctx.beginPath();
-          ctx.rect(caveX - 10, 0, (widthCave + 30) * p2, 280);
+          ctx.rect(caveX - 10, 0, (width2 + 30) * p2, logicalHeight);
           ctx.clip();
 
-          ctx.font = "italic 700 128px 'Alex Brush', cursive";
+          ctx.font = `italic 700 ${fontSizeP2}px 'Great Vibes', cursive, sans-serif`;
           ctx.textBaseline = "alphabetic";
 
-          // Signature Glow
+          // Neon highlight glow
           ctx.shadowColor = "#c084fc";
           ctx.shadowBlur = 22;
 
-          // Rich calligraphic strokes
           ctx.strokeStyle = "#a855f7";
-          ctx.lineWidth = 5;
-          ctx.strokeText(phraseCave, caveX, baselineY);
+          ctx.lineWidth = Math.max(4.5, 5.5 * scaleFactor);
+          ctx.strokeText(part2, caveX, baselineY);
 
-          ctx.strokeStyle = "#f3e8ff";
-          ctx.lineWidth = 2;
-          ctx.strokeText(phraseCave, caveX, baselineY);
+          ctx.strokeStyle = "#e9d5ff";
+          ctx.lineWidth = Math.max(2, 2.6 * scaleFactor);
+          ctx.strokeText(part2, caveX, baselineY);
 
-          // Platinum silver to violet gradient
-          const grad = ctx.createLinearGradient(caveX, baselineY - 80, caveX, baselineY);
+          // Silver-to-violet gradient
+          const grad = ctx.createLinearGradient(caveX, baselineY - fontSizeP2 * 0.8, caveX, baselineY);
           grad.addColorStop(0, "#ffffff");
-          grad.addColorStop(1, "#e9d5ff");
+          grad.addColorStop(0.7, "#f5f3ff");
+          grad.addColorStop(1, "#c084fc");
           ctx.fillStyle = grad;
-          ctx.fillText(phraseCave, caveX, baselineY);
+          ctx.fillText(part2, caveX, baselineY);
 
           ctx.restore();
         }
 
-        // 3. Glowing pen tip spark
+        // 3. Realistic pen nib point
         if (progressTotal < 1) {
-          let penX, penY;
+          let penX, penY, sparkColor;
 
           if (elapsed <= time1) {
-            penX = startX + widthPrefix * p1;
-            penY = baselineY - 14 + Math.sin(p1 * 20) * 12;
+            penX = startX + width1 * p1;
+            penY = baselineY - (fontSizeP1 * 0.18) + Math.sin(p1 * 26) * (10 * scaleFactor);
+            sparkColor = "#ffffff";
           } else {
             const p2 = (elapsed - time1) / time2;
-            penX = startX + widthPrefix + widthCave * p2;
-            penY = baselineY - 18 + Math.sin(p2 * 18) * 16;
+            penX = startX + width1 + width2 * p2;
+            penY = baselineY - (fontSizeP2 * 0.2) + Math.sin(p2 * 22) * (14 * scaleFactor);
+            sparkColor = "#d8b4fe";
           }
 
           ctx.save();
           ctx.beginPath();
-          ctx.arc(penX, penY, 3.5, 0, Math.PI * 2);
-          ctx.fillStyle = "#ffffff";
+          ctx.arc(penX, penY, 5 * scaleFactor, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(168, 85, 247, 0.4)";
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(penX, penY, 2.5 * scaleFactor, 0, Math.PI * 2);
+          ctx.fillStyle = sparkColor;
           ctx.shadowColor = "#a855f7";
           ctx.shadowBlur = 12;
           ctx.fill();
@@ -273,21 +357,21 @@
         }
 
         if (progressTotal < 1) {
-          requestAnimationFrame(step);
+          requestAnimationFrame(frame);
         } else {
-          // Reveal the sleek button
-          btnWrap.classList.add('show');
+          animationComplete = true;
+          btnContainer.classList.add('show');
         }
       }
 
-      requestAnimationFrame(step);
+      requestAnimationFrame(frame);
     }
 
     function handleEnter() {
       const btn = document.getElementById('enterBtn');
-      btn.innerHTML = '<span>Entering...</span>';
+      btn.innerHTML = '<span>Entering Terminal</span> <span class="arrow-icon">✓</span>';
       btn.style.borderColor = '#22c55e';
-      btn.style.boxShadow = '0 0 28px rgba(34, 197, 94, 0.6)';
+      btn.style.boxShadow = '0 0 35px rgba(34, 197, 94, 0.65)';
       btn.style.pointerEvents = 'none';
 
       setTimeout(() => {
@@ -295,8 +379,8 @@
         document.body.style.filter = 'blur(4px)';
         setTimeout(() => {
           window.location.href = 'main.html';
-        }, 200);
-      }, 250);
+        }, 220);
+      }, 260);
     }
   </script>
 </body>
