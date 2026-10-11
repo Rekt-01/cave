@@ -18,7 +18,6 @@
       --accent-glow: rgba(168, 85, 247, 0.4);
       --green: #22c55e;
       --text-muted: #8e8ea0;
-      --surface-hover: rgba(255, 255, 255, 0.05);
     }
 
     * {
@@ -48,7 +47,7 @@
       background: rgba(14, 14, 20, 0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 10px 18px;
+      padding: 10px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -85,21 +84,29 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
-    .back-btn {
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .back-btn, .external-btn {
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      padding: 6px 12px;
+      padding: 6px 10px;
       border-radius: 8px;
       border: 1px solid var(--border);
       transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .back-btn:hover {
+    .back-btn:hover, .external-btn:hover {
       color: #fff;
       border-color: var(--accent);
-      box-shadow: 0 0 10px var(--accent-glow);
     }
 
     /* Main Terminal Layout */
@@ -107,11 +114,11 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 10px 14px 10px 14px;
+      padding: 8px 12px;
       width: 100%;
       max-width: 1800px;
       margin: 0 auto;
-      gap: 10px;
+      gap: 8px;
     }
 
     /* Controls Bar */
@@ -131,7 +138,7 @@
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .pair-picker {
@@ -139,7 +146,7 @@
       align-items: center;
       gap: 8px;
       flex: 1;
-      min-width: 240px;
+      min-width: 220px;
     }
 
     .pair-input {
@@ -167,11 +174,6 @@
       font-weight: 600;
       font-size: 0.8rem;
       cursor: pointer;
-      transition: opacity 0.2s;
-    }
-
-    .load-btn:hover {
-      opacity: 0.9;
     }
 
     .live-status {
@@ -214,7 +216,6 @@
       font-size: 0.72rem;
       font-family: 'JetBrains Mono', monospace;
       cursor: pointer;
-      transition: all 0.2s;
     }
 
     .preset-pill:hover, .preset-pill.active {
@@ -223,22 +224,24 @@
       color: #fff;
     }
 
-    /* Full responsive chart container */
+    /* Terminal Frame with fixed flex containment */
     .terminal-frame {
       position: relative;
-      flex: 1;
+      flex: 1 1 auto;
       width: 100%;
-      min-height: 520px;
+      height: 60vh;
+      min-height: 480px;
       background: #000;
       border: 1px solid var(--border);
       border-radius: 10px;
       overflow: hidden;
+      -webkit-overflow-scrolling: touch;
     }
 
-    @media (max-width: 768px) {
+    @media (min-width: 769px) {
       .terminal-frame {
-        min-height: 60vh;
-        min-height: 60dvh;
+        height: calc(100vh - 230px);
+        min-height: 580px;
       }
     }
 
@@ -251,22 +254,22 @@
       border: 0;
     }
 
-    /* Ecosystem links footer section */
+    /* Ecosystem links footer */
     .ecosystem-hub {
       background: var(--card-bg);
       border-top: 1px solid var(--border);
-      padding: 12px 16px;
+      padding: 10px 16px;
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-shrink: 0;
     }
 
     .hub-title {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--text-muted);
@@ -276,7 +279,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       width: 100%;
       max-width: 1100px;
     }
@@ -284,16 +287,15 @@
     .eco-link {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
       background: #07070b;
       border: 1px solid var(--border);
       color: #e2e8f0;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 0.78rem;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
       font-weight: 600;
       text-decoration: none;
-      transition: all 0.2s ease;
       font-family: 'JetBrains Mono', monospace;
     }
 
@@ -301,17 +303,13 @@
       border-color: var(--accent);
       background: rgba(168, 85, 247, 0.12);
       color: #ffffff;
-      transform: translateY(-1px);
     }
 
     .eco-icon {
-      width: 15px;
-      height: 15px;
+      width: 14px;
+      height: 14px;
       display: inline-flex;
-      align-items: center;
-      justify-content: center;
       color: var(--accent);
-      flex-shrink: 0;
     }
 
     .eco-icon svg {
@@ -320,14 +318,6 @@
       fill: none;
       stroke: currentColor;
       stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .sub-footer {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 2px;
     }
   </style>
 </head>
@@ -340,7 +330,10 @@
       <div class="badge-chain">Cronos</div>
     </div>
     
-    <div>
+    <div class="nav-actions">
+      <a href="#" id="directDexLink" target="_blank" rel="noopener noreferrer" class="external-btn" title="Open full chart in app">
+        Open App ↗
+      </a>
       <a href="index.html" class="back-btn">← Back</a>
     </div>
   </header>
@@ -368,80 +361,61 @@
 
       <div class="presets-row">
         <span class="presets-label">Pairs:</span>
-        <button class="preset-pill active" onclick="loadPreset('0xe61db569e231b3f5530168aa2c9d50246525b6d6', this)">WCRO / USDC</button>
-        <button class="preset-pill" onclick="loadPreset('0xbf62c67ea509e86f07c8c69d0286c0636c50270b', this)">VVS / WCRO</button>
-        <button class="preset-pill" onclick="loadPreset('0x9e44225db6a7c0d31f081d9ffa658979b8e523db', this)">CRONUS / WCRO</button>
-        <button class="preset-pill" onclick="loadPreset('0x553255ff6e6545eb5b01449c253b27b68b7ca2c1', this)">CORGIAI / WCRO</button>
+        <button class="preset-pill active" onclick="loadPreset('0xe61db569e231b3f5530168aa2c9d50246525b6d6', this)">WCRO/USDC</button>
+        <button class="preset-pill" onclick="loadPreset('0xbf62c67ea509e86f07c8c69d0286c0636c50270b', this)">VVS/WCRO</button>
+        <button class="preset-pill" onclick="loadPreset('0x9e44225db6a7c0d31f081d9ffa658979b8e523db', this)">CRONUS</button>
+        <button class="preset-pill" onclick="loadPreset('0x553255ff6e6545eb5b01449c253b27b68b7ca2c1', this)">CORGIAI</button>
       </div>
     </div>
 
-    <!-- DexScreener Live Frame -->
+    <!-- DexScreener Live Frame with Mobile Permissions Enabled -->
     <div class="terminal-frame">
       <iframe 
         id="dexIframe"
         src="https://dexscreener.com/cronos/0xe61db569e231b3f5530168aa2c9d50246525b6d6?embed=1&theme=dark"
         title="DEXScreener Cronos Terminal"
+        allow="clipboard-write; web-share"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
         allowfullscreen>
       </iframe>
     </div>
   </main>
 
-  <!-- Ecosystem Directory Bottom Hub with Icons -->
+  <!-- Ecosystem Directory Bottom Hub -->
   <footer class="ecosystem-hub">
     <div class="hub-title">Cronos Ecosystem Directory</div>
     <div class="links-grid">
       
-      <!-- 1. Cronos Official Core Hub -->
-      <a href="https://cronos.org" target="_blank" rel="noopener noreferrer" class="eco-link" title="Cronos Official Network">
-        <span class="eco-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        </span>
+      <a href="https://cronos.org" target="_blank" rel="noopener noreferrer" class="eco-link">
+        <span class="eco-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg></span>
         Cronos.org
       </a>
 
-      <!-- 2. Block Explorer: Cronoscan -->
-      <a href="https://cronoscan.com" target="_blank" rel="noopener noreferrer" class="eco-link" title="Cronoscan Block Explorer">
-        <span class="eco-icon">
-          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        </span>
+      <a href="https://cronoscan.com" target="_blank" rel="noopener noreferrer" class="eco-link">
+        <span class="eco-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
         Cronoscan
       </a>
 
-      <!-- 3. Primary DEX: VVS Finance -->
-      <a href="https://vvs.finance" target="_blank" rel="noopener noreferrer" class="eco-link" title="VVS Finance DEX">
-        <span class="eco-icon">
-          <svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
-        </span>
+      <a href="https://vvs.finance" target="_blank" rel="noopener noreferrer" class="eco-link">
+        <span class="eco-icon"><svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg></span>
         VVS Finance
       </a>
 
-      <!-- 4. DexScreener Cronos -->
-      <a href="https://dexscreener.com/cronos" target="_blank" rel="noopener noreferrer" class="eco-link" title="DexScreener Cronos Hub">
-        <span class="eco-icon">
-          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-        </span>
+      <a href="https://dexscreener.com/cronos" target="_blank" rel="noopener noreferrer" class="eco-link">
+        <span class="eco-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
         DexScreener
       </a>
 
-      <!-- 5. Analytics: DeFiLlama -->
-      <a href="https://defillama.com/chain/Cronos" target="_blank" rel="noopener noreferrer" class="eco-link" title="DeFiLlama Cronos Metrics">
-        <span class="eco-icon">
-          <svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
-        </span>
+      <a href="https://defillama.com/chain/Cronos" target="_blank" rel="noopener noreferrer" class="eco-link">
+        <span class="eco-icon"><svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></span>
         DeFiLlama
       </a>
 
-      <!-- 6. NFT Marketplace: Ebisu's Bay -->
-      <a href="https://ebisusbay.com" target="_blank" rel="noopener noreferrer" class="eco-link" title="Ebisu's Bay NFT Marketplace">
-        <span class="eco-icon">
-          <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-        </span>
+      <a href="https://ebisusbay.com" target="_blank" rel="noopener noreferrer" class="eco-link">
+        <span class="eco-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/></svg></span>
         Ebisu's Bay
       </a>
 
-    </div>
-    <div class="sub-footer">
-      welcome to cave • Cronos Network
     </div>
   </footer>
 
@@ -449,10 +423,15 @@
     function updatePair() {
       const input = document.getElementById('pairInput').value.trim();
       const iframe = document.getElementById('dexIframe');
+      const directLink = document.getElementById('directDexLink');
       
       if (input) {
         let cleanId = input.replace('https://dexscreener.com/cronos/', '').replace(/\?.*$/, '');
-        iframe.src = `https://dexscreener.com/cronos/${cleanId}?embed=1&theme=dark`;
+        const embedUrl = `https://dexscreener.com/cronos/${cleanId}?embed=1&theme=dark`;
+        iframe.src = embedUrl;
+        if (directLink) {
+          directLink.href = `https://dexscreener.com/cronos/${cleanId}`;
+        }
       }
     }
 
@@ -467,6 +446,9 @@
     document.getElementById('pairInput').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') updatePair();
     });
+
+    // Initialize external button href on load
+    updatePair();
   </script>
 </body>
 </html>
