@@ -3,13 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>welcome to cave</title>
-  
+  <title>CAVE // Welcome to the Cave Ecosystem</title>
+
+  <!-- Typography: Great Vibes for signature cursive, Plus Jakarta Sans & JetBrains Mono for fintech UI -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --bg: #050508;
+      --surface: rgba(13, 13, 20, 0.75);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(168, 85, 247, 0.35);
+      --accent: #a855f7;
+      --accent-bright: #c084fc;
+      --accent-glow: rgba(168, 85, 247, 0.45);
+      --green: #22c55e;
+      --text-muted: #94a3b8;
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -18,215 +31,556 @@
     }
 
     body {
-      background-color: #050508;
+      background-color: var(--bg);
       color: #ffffff;
       min-height: 100vh;
-      min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      font-family: 'Inter', sans-serif;
-      transition: opacity 0.3s ease;
-      padding: 20px 16px;
+      overflow-x: hidden;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: opacity 0.35s ease, filter 0.35s ease;
+      position: relative;
     }
 
-    /* Ambient glow that scales with screen size */
-    .ambient-glow {
-      position: absolute;
-      width: min(85vw, 550px);
-      height: min(60vw, 350px);
-      background: radial-gradient(circle, rgba(147, 51, 234, 0.18) 0%, rgba(5, 5, 8, 0) 72%);
+    /* Ambient Glow & Grid Layering */
+    .ambient-glow-center {
+      position: fixed;
+      top: 48%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(90vw, 750px);
+      height: min(65vw, 480px);
+      background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.14) 0%, rgba(99, 102, 241, 0.06) 50%, rgba(5, 5, 8, 0) 75%);
       pointer-events: none;
       z-index: 0;
+      filter: blur(28px);
     }
 
-    .container {
+    .grid-backdrop {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+      background-size: 56px 56px;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
+      -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
+    }
+
+    /* Corporate Nav Header */
+    header {
+      width: 100%;
+      padding: 16px clamp(16px, 4vw, 36px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       position: relative;
-      z-index: 1;
+      z-index: 20;
+      border-bottom: 1px solid var(--border);
+      background: rgba(5, 5, 8, 0.65);
+      backdrop-filter: blur(16px);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      color: #fff;
+    }
+
+    .brand-mark span {
+      color: var(--accent);
+    }
+
+    .chain-pill {
+      background: rgba(0, 134, 255, 0.12);
+      border: 1px solid rgba(0, 134, 255, 0.3);
+      color: #38bdf8;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.05em;
+    }
+
+    .contract-pill {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .contract-pill:hover {
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    @media (min-width: 768px) {
+      .contract-pill { display: inline-flex; }
+    }
+
+    /* Central Landing Container */
+    main {
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      position: relative;
+      z-index: 10;
+      padding: clamp(24px, 5vh, 48px) 20px;
       text-align: center;
       width: 100%;
-      max-width: 860px;
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
-    /* Responsive Cursive Canvas */
+    .hero-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(0.7rem, 2vw, 0.8rem);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+
+    .hero-badge .status-ping {
+      width: 6px;
+      height: 6px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green);
+    }
+
+    /* Canvas Handwriting Stage */
+    .canvas-container {
+      width: 100%;
+      max-width: 900px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     #cursiveCanvas {
       width: 100%;
       height: auto;
-      max-height: 220px;
+      max-height: 250px;
       display: block;
-      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.45))
-              drop-shadow(0 0 22px rgba(168, 85, 247, 0.38));
+      filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.35));
     }
 
-    /* Button Container */
-    .btn-container {
-      margin-top: clamp(24px, 6vh, 48px);
+    /* Subtitle text */
+    .hero-caption {
+      color: var(--text-muted);
+      font-size: clamp(0.9rem, 2.2vw, 1.05rem);
+      max-width: 580px;
+      line-height: 1.6;
+      margin-top: 6px;
       opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: fadeInSubtle 0.9s ease 1.2s forwards;
+    }
+
+    @keyframes fadeInSubtle {
+      to { opacity: 1; }
+    }
+
+    /* Button Wrap */
+    .btn-container {
+      margin-top: clamp(28px, 5vh, 44px);
+      opacity: 0;
+      transform: translateY(14px) scale(0.98);
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
       pointer-events: none;
     }
 
     .btn-container.show {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
       pointer-events: auto;
     }
 
-    /* "Click to Enter" Button */
+    /* CTA Button */
     .enter-btn {
       position: relative;
-      background: linear-gradient(135deg, #18181b, #09090b);
+      background: linear-gradient(135deg, rgba(28, 28, 38, 0.98), rgba(12, 12, 18, 0.98));
       color: #fafafa;
       border: 1px solid rgba(255, 255, 255, 0.22);
-      padding: clamp(12px, 3vw, 16px) clamp(28px, 6vw, 44px);
-      font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+      padding: clamp(14px, 3.2vw, 17px) clamp(34px, 6vw, 48px);
+      font-size: clamp(0.92rem, 2.2vw, 1.05rem);
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       border-radius: 9999px;
       cursor: pointer;
-      box-shadow: 0 4px 22px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.25);
-      transition: all 0.22s ease;
+      backdrop-filter: blur(12px);
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.7),
+        inset 0 1px 1px rgba(255, 255, 255, 0.25),
+        0 0 0 1px rgba(168, 85, 247, 0.12);
+      transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      user-select: none;
+      gap: 10px;
       outline: none;
     }
 
+    .enter-btn .arrow-icon {
+      font-size: 1rem;
+      transition: transform 0.22s ease;
+      color: var(--accent-bright);
+    }
+
     .enter-btn:hover {
-      border-color: #a855f7;
-      box-shadow: 0 0 25px rgba(168, 85, 247, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-      transform: scale(1.04);
+      border-color: var(--accent);
+      box-shadow: 
+        0 12px 35px rgba(0, 0, 0, 0.8),
+        0 0 32px rgba(168, 85, 247, 0.55),
+        inset 0 1px 1px rgba(255, 255, 255, 0.45);
+      transform: translateY(-2px) scale(1.03);
       color: #ffffff;
     }
 
+    .enter-btn:hover .arrow-icon {
+      transform: translateX(4px);
+    }
+
     .enter-btn:active {
-      transform: scale(0.96);
+      transform: translateY(1px) scale(0.98);
+    }
+
+    /* Ecosystem Micro-Stats Card Row */
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: clamp(10px, 3vw, 24px);
+      margin-top: clamp(36px, 6vh, 52px);
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 760px;
+      opacity: 0;
+      animation: fadeInSubtle 1s ease 1.8s forwards;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 12px 20px;
+      border-radius: 12px;
+      min-width: 150px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      transition: border-color 0.2s;
+    }
+
+    .stat-card:hover {
+      border-color: var(--border-hover);
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Footer */
+    footer {
+      width: 100%;
+      padding: 14px clamp(16px, 4vw, 36px);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      position: relative;
+      z-index: 20;
+      background: rgba(5, 5, 8, 0.65);
+    }
+
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover {
+      color: var(--accent-bright);
     }
   </style>
 </head>
 <body>
 
-  <div class="ambient-glow"></div>
+  <div class="grid-backdrop"></div>
+  <div class="ambient-glow-center"></div>
 
-  <div class="container">
-    <!-- Dynamic high-DPI canvas -->
-    <canvas id="cursiveCanvas" width="1400" height="280"></canvas>
+  <!-- Header -->
+  <header>
+    <div class="brand-group">
+      <div class="brand-mark">CAVE <span>//</span> CRONOS</div>
+      <div class="chain-pill">EVM Mainnet</div>
+    </div>
 
+    <div class="contract-pill" onclick="copyContract()">
+      <span style="color: var(--accent);">CA:</span>
+      <span id="caText">0xe61d...b6d6</span>
+      <span style="font-size: 0.7rem;">📋</span>
+    </div>
+  </header>
+
+  <!-- Central Hero Stage -->
+  <main>
+    <div class="hero-badge">
+      <span class="status-ping"></span>
+      <span>Cronos Liquidity & Memetics Layer</span>
+    </div>
+
+    <!-- Active Calligraphic Drawing -->
+    <div class="canvas-container">
+      <canvas id="cursiveCanvas" width="1600" height="320"></canvas>
+    </div>
+
+    <p class="hero-caption">
+      Decentralized trading, real-time analytics, and community liquidity pools engineered on the Cronos ecosystem.
+    </p>
+
+    <!-- Click to Enter (Redirects to main.html) -->
     <div class="btn-container" id="btnContainer">
       <button class="enter-btn" id="enterBtn" onclick="handleEnter()">
-        Click to Enter
+        <span>Click to Enter</span>
+        <span class="arrow-icon">→</span>
       </button>
     </div>
-  </div>
+
+    <!-- Institutional Stat Badges -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Network</div>
+        <div class="stat-value">Cronos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Block Time</div>
+        <div class="stat-value">5.6s</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Terminal Feed</div>
+        <div class="stat-value" style="color: var(--green);">Active</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div>© CAVE Protocol • Cronos Network</div>
+    <div><a href="main.html">Launch DEX Terminal →</a></div>
+  </footer>
 
   <script>
     const canvas = document.getElementById('cursiveCanvas');
     const ctx = canvas.getContext('2d');
     const btnContainer = document.getElementById('btnContainer');
 
-    // Font load safety with immediate fallback
-    let fontLoaded = false;
+    // Auto-scale canvas DPI for Retina/4K/Mobile displays
+    function initCanvasResolution() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = 1600 * dpr;
+      canvas.height = 320 * dpr;
+      ctx.scale(dpr, dpr);
+    }
+    initCanvasResolution();
+
+    // Preload Great Vibes font
     document.fonts.load("italic 120px 'Great Vibes'").then(() => {
-      fontLoaded = true;
-      runAnimation();
+      startWritingAnimation();
     }).catch(() => {
-      runAnimation();
+      startWritingAnimation();
     });
 
-    // Fallback timer if fonts take too long over mobile connections
-    setTimeout(() => {
-      if (!fontLoaded) runAnimation();
-    }, 400);
+    function startWritingAnimation() {
+      const part1 = "welcome to ";
+      const part2 = "CAVE";
 
-    let animationStarted = false;
+      ctx.font = "italic 115px 'Great Vibes', cursive";
+      const widthPart1 = ctx.measureText(part1).width;
 
-    function runAnimation() {
-      if (animationStarted) return;
-      animationStarted = true;
+      ctx.font = "italic 700 132px 'Great Vibes', cursive";
+      const widthPart2 = ctx.measureText(part2).width;
 
-      const text = "welcome to cave";
-      // Fast, snappy writing duration (1.8 seconds)
-      const duration = 1800; 
+      const totalWidth = widthPart1 + widthPart2;
+      const startX = (1600 - totalWidth) / 2;
+      const baselineY = 195;
+
+      const timePart1 = 1250; // "welcome to" pen time
+      const timePart2 = 1100; // bold "CAVE" pen time
+      const totalTime = timePart1 + timePart2;
       const startTime = performance.now();
 
-      function draw(now) {
+      function frame(now) {
         const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
+        const progressTotal = Math.min(elapsed / totalTime, 1);
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, 1600, 320);
 
-        // Responsive font rendering for standard canvas coords
-        ctx.font = "italic 118px 'Great Vibes', cursive, sans-serif";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-
-        const textX = canvas.width / 2;
-        const textY = canvas.height / 2;
-        const totalWidth = ctx.measureText(text).width;
-        const startX = textX - (totalWidth / 2) - 20;
-
-        // Clip revealing the writing smoothly from left to right
-        ctx.save();
-        ctx.beginPath();
-        const currentDrawWidth = (totalWidth + 50) * progress;
-        ctx.rect(startX, 0, currentDrawWidth, canvas.height);
-        ctx.clip();
-
-        // Stroke pen effect
-        ctx.strokeStyle = "#e9d5ff";
-        ctx.lineWidth = 3.2;
-        ctx.strokeText(text, textX, textY);
-
-        // Fill glow
-        ctx.fillStyle = "#ffffff";
-        ctx.fillText(text, textX, textY);
-
-        ctx.restore();
-
-        // Glowing pen nib point moving with current draw position
-        if (progress < 1) {
-          const penX = startX + currentDrawWidth;
+        // 1. Draw "welcome to "
+        const progress1 = Math.min(elapsed / timePart1, 1);
+        if (progress1 > 0) {
+          ctx.save();
           ctx.beginPath();
-          ctx.arc(penX, textY + 10, 4.5, 0, Math.PI * 2);
-          ctx.fillStyle = "#ffffff";
-          ctx.shadowColor = "#a855f7";
-          ctx.shadowBlur = 12;
-          ctx.fill();
+          ctx.rect(startX - 10, 0, (widthPart1 + 20) * progress1, 320);
+          ctx.clip();
+
+          ctx.font = "italic 115px 'Great Vibes', cursive, sans-serif";
+          ctx.textBaseline = "alphabetic";
+
+          ctx.shadowColor = "rgba(168, 85, 247, 0.35)";
+          ctx.shadowBlur = 10;
+
+          ctx.strokeStyle = "rgba(226, 232, 240, 0.85)";
+          ctx.lineWidth = 2.4;
+          ctx.strokeText(part1, startX, baselineY);
+
+          ctx.fillStyle = "#f8fafc";
+          ctx.fillText(part1, startX, baselineY);
+          ctx.restore();
         }
 
-        if (progress < 1) {
-          requestAnimationFrame(draw);
+        // 2. Draw "CAVE" (Bold highlighted calligraphy)
+        if (elapsed > timePart1) {
+          const progress2 = Math.min((elapsed - timePart1) / timePart2, 1);
+          const caveStartX = startX + widthPart1;
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.rect(caveStartX - 10, 0, (widthPart2 + 35) * progress2, 320);
+          ctx.clip();
+
+          ctx.font = "italic 700 132px 'Great Vibes', cursive, sans-serif";
+          ctx.textBaseline = "alphabetic";
+
+          ctx.shadowColor = "#c084fc";
+          ctx.shadowBlur = 24;
+
+          // Multi-layer bold ink stroke
+          ctx.strokeStyle = "#a855f7";
+          ctx.lineWidth = 6.5;
+          ctx.strokeText(part2, caveStartX, baselineY);
+
+          ctx.strokeStyle = "#e9d5ff";
+          ctx.lineWidth = 3.2;
+          ctx.strokeText(part2, caveStartX, baselineY);
+
+          // Vivid gradient fill
+          const grad = ctx.createLinearGradient(caveStartX, baselineY - 100, caveStartX, baselineY + 20);
+          grad.addColorStop(0, "#ffffff");
+          grad.addColorStop(0.7, "#f5f3ff");
+          grad.addColorStop(1, "#c084fc");
+          ctx.fillStyle = grad;
+          ctx.fillText(part2, caveStartX, baselineY);
+
+          ctx.restore();
+        }
+
+        // 3. Realistic Nib Glow Spark
+        if (progressTotal < 1) {
+          let penX, penY, sparkColor;
+
+          if (elapsed <= timePart1) {
+            penX = startX + widthPart1 * progress1;
+            penY = baselineY - 18 + Math.sin(progress1 * 26) * 16;
+            sparkColor = "#ffffff";
+          } else {
+            const p2 = (elapsed - timePart1) / timePart2;
+            penX = startX + widthPart1 + widthPart2 * p2;
+            penY = baselineY - 22 + Math.sin(p2 * 22) * 22;
+            sparkColor = "#d8b4fe";
+          }
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(penX, penY, 7, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(168, 85, 247, 0.4)";
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(penX, penY, 3, 0, Math.PI * 2);
+          ctx.fillStyle = sparkColor;
+          ctx.shadowColor = "#a855f7";
+          ctx.shadowBlur = 14;
+          ctx.fill();
+          ctx.restore();
+        }
+
+        if (progressTotal < 1) {
+          requestAnimationFrame(frame);
         } else {
-          // Reveal the button immediately after writing completes
+          // Reveal button right as the pen finishes
           btnContainer.classList.add('show');
         }
       }
 
-      requestAnimationFrame(draw);
+      requestAnimationFrame(frame);
     }
 
     function handleEnter() {
       const btn = document.getElementById('enterBtn');
-      btn.innerText = 'Entering... 🚀';
+      btn.innerHTML = '<span>Entering Terminal</span> <span class="arrow-icon">✓</span>';
       btn.style.borderColor = '#22c55e';
-      btn.style.boxShadow = '0 0 30px rgba(34, 197, 94, 0.7)';
+      btn.style.boxShadow = '0 0 35px rgba(34, 197, 94, 0.65)';
       btn.style.pointerEvents = 'none';
 
       setTimeout(() => {
         document.body.style.opacity = '0';
+        document.body.style.filter = 'blur(4px)';
         setTimeout(() => {
           window.location.href = 'main.html';
         }, 220);
-      }, 250);
+      }, 260);
+    }
+
+    function copyContract() {
+      navigator.clipboard.writeText("0xe61db569e231b3f5530168aa2c9d50246525b6d6");
+      const el = document.getElementById('caText');
+      const original = el.innerText;
+      el.innerText = "COPIED!";
+      setTimeout(() => { el.innerText = original; }, 1500);
     }
   </script>
 </body>
