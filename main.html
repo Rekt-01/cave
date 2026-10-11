@@ -27,41 +27,43 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    body {
+    html, body {
+      height: 100%;
       background-color: var(--bg);
       color: #fafafa;
       font-family: 'Inter', sans-serif;
-      min-height: 100vh;
-      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
+    body {
       display: flex;
       flex-direction: column;
-      overflow-x: hidden;
+      min-height: 100vh;
+      min-height: 100dvh;
     }
 
     /* Top navigation bar */
     header {
-      background: rgba(14, 14, 20, 0.9);
+      background: rgba(14, 14, 20, 0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 12px clamp(16px, 4vw, 28px);
+      padding: 10px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 50;
+      flex-shrink: 0;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .brand-logo {
       font-family: 'JetBrains Mono', monospace;
       font-weight: 700;
-      font-size: clamp(1rem, 3vw, 1.25rem);
+      font-size: 1.05rem;
       letter-spacing: 0.08em;
       color: #ffffff;
     }
@@ -71,31 +73,26 @@
     }
 
     .badge-chain {
-      background: rgba(0, 134, 255, 0.12);
+      background: rgba(0, 134, 255, 0.15);
       border: 1px solid rgba(0, 134, 255, 0.35);
       color: #38bdf8;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 600;
-      padding: 3px 8px;
+      padding: 2px 7px;
       border-radius: 999px;
-      letter-spacing: 0.05em;
       text-transform: uppercase;
       font-family: 'JetBrains Mono', monospace;
-      display: inline-block;
     }
 
     .back-btn {
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
-      padding: 8px 14px;
+      padding: 6px 12px;
       border-radius: 8px;
       border: 1px solid var(--border);
       transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
     }
 
     .back-btn:hover {
@@ -109,22 +106,23 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: clamp(14px, 3vw, 24px);
-      max-width: 1600px;
+      padding: 10px 14px 14px 14px;
       width: 100%;
+      max-width: 1800px;
       margin: 0 auto;
-      gap: 14px;
+      gap: 10px;
     }
 
-    /* Pair Controls & Preset Buttons */
+    /* Controls Bar */
     .controls-container {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 16px;
+      border-radius: 10px;
+      padding: 8px 12px;
+      flex-shrink: 0;
     }
 
     .top-controls {
@@ -132,7 +130,7 @@
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .pair-picker {
@@ -140,7 +138,7 @@
       align-items: center;
       gap: 8px;
       flex: 1;
-      min-width: 260px;
+      min-width: 240px;
     }
 
     .pair-input {
@@ -148,12 +146,11 @@
       border: 1px solid var(--border);
       color: #f4f4f5;
       font-family: 'JetBrains Mono', monospace;
-      font-size: clamp(0.75rem, 2vw, 0.85rem);
-      padding: 9px 12px;
-      border-radius: 8px;
+      font-size: 0.8rem;
+      padding: 7px 10px;
+      border-radius: 6px;
       width: 100%;
       outline: none;
-      transition: border-color 0.2s;
     }
 
     .pair-input:focus {
@@ -164,54 +161,41 @@
       background: var(--accent);
       color: #fff;
       border: none;
-      padding: 9px 16px;
-      border-radius: 8px;
+      padding: 7px 14px;
+      border-radius: 6px;
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       cursor: pointer;
-      transition: opacity 0.2s;
-      white-space: nowrap;
-    }
-
-    .load-btn:hover {
-      opacity: 0.9;
     }
 
     .live-status {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.8rem;
+      gap: 6px;
+      font-size: 0.75rem;
       color: var(--green);
       font-family: 'JetBrains Mono', monospace;
     }
 
     .status-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 8px var(--green);
-      animation: pulse 1.8s infinite;
+      box-shadow: 0 0 6px var(--green);
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
-    }
-
-    /* Presets Quick Picker */
+    /* Quick Test buttons */
     .presets-row {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 8px;
-      font-size: 0.8rem;
+      gap: 6px;
     }
 
     .presets-label {
       color: var(--text-muted);
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-family: 'JetBrains Mono', monospace;
     }
 
@@ -219,53 +203,56 @@
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border);
       color: #e4e4e7;
-      padding: 4px 10px;
+      padding: 3px 8px;
       border-radius: 6px;
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-family: 'JetBrains Mono', monospace;
       cursor: pointer;
-      transition: all 0.2s ease;
     }
 
     .preset-pill:hover, .preset-pill.active {
-      background: rgba(168, 85, 247, 0.15);
+      background: rgba(168, 85, 247, 0.2);
       border-color: var(--accent);
       color: #fff;
     }
 
-    /* Dexscreener Terminal Frame */
+    /* Full responsive chart container */
     .terminal-frame {
       position: relative;
       flex: 1;
-      height: calc(100vh - 210px);
-      min-height: 580px;
+      width: 100%;
+      min-height: 650px;
       background: #000;
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Mobile specific adjustment so it fills tall mobile viewports */
+    @media (max-width: 768px) {
+      main {
+        padding: 8px;
+        gap: 8px;
+      }
+      .terminal-frame {
+        min-height: 75vh;
+        min-height: 75dvh;
+      }
     }
 
     #dexIframe {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      border: none;
-      display: block;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 12px;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border);
+      border: 0;
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Top Header -->
   <header>
     <div class="brand">
       <div class="brand-logo">CAVE <span>//</span> TERMINAL</div>
@@ -273,13 +260,11 @@
     </div>
     
     <div>
-      <a href="index.html" class="back-btn">
-        ← Back
-      </a>
+      <a href="index.html" class="back-btn">← Back</a>
     </div>
   </header>
 
-  <!-- Terminal Main -->
+  <!-- Terminal Body -->
   <main>
     <div class="controls-container">
       <div class="top-controls">
@@ -288,7 +273,7 @@
             type="text" 
             id="pairInput" 
             class="pair-input" 
-            placeholder="Paste Cronos Pair Address (0x...)" 
+            placeholder="Paste Cronos Pair Address" 
             value="0xe61db569e231b3f5530168aa2c9d50246525b6d6"
           />
           <button class="load-btn" onclick="updatePair()">Load</button>
@@ -300,29 +285,25 @@
         </div>
       </div>
 
-      <!-- Quick Test Buttons -->
       <div class="presets-row">
-        <span class="presets-label">Test Pairs:</span>
+        <span class="presets-label">Pairs:</span>
         <button class="preset-pill active" onclick="loadPreset('0xe61db569e231b3f5530168aa2c9d50246525b6d6', this)">WCRO / USDC</button>
         <button class="preset-pill" onclick="loadPreset('0xbf62c67ea509e86f07c8c69d0286c0636c50270b', this)">VVS / WCRO</button>
         <button class="preset-pill" onclick="loadPreset('0x553255ff6e6545eb5b01449c253b27b68b7ca2c1', this)">CORGIAI / WCRO</button>
       </div>
     </div>
 
-    <!-- Dexscreener Live Embed -->
+    <!-- DexScreener Live Frame -->
     <div class="terminal-frame">
+      <!-- Enabled trades and responsive layout parameters so TradingView scales to 100% of the box -->
       <iframe 
         id="dexIframe"
-        src="https://dexscreener.com/cronos/0xe61db569e231b3f5530168aa2c9d50246525b6d6?embed=1&theme=dark&trades=0&info=0"
+        src="https://dexscreener.com/cronos/0xe61db569e231b3f5530168aa2c9d50246525b6d6?embed=1&theme=dark"
         title="DEXScreener Cronos Terminal"
         allowfullscreen>
       </iframe>
     </div>
   </main>
-
-  <footer>
-    welcome to cave • powered by cronos network
-  </footer>
 
   <script>
     function updatePair() {
@@ -330,9 +311,9 @@
       const iframe = document.getElementById('dexIframe');
       
       if (input) {
-        // Automatically strips full URLs if the user pasted a raw web link
         let cleanId = input.replace('https://dexscreener.com/cronos/', '').replace(/\?.*$/, '');
-        iframe.src = `https://dexscreener.com/cronos/${cleanId}?embed=1&theme=dark&trades=0&info=0`;
+        // Removed &trades=0 so Dexscreener doesn't render an empty black placeholder box
+        iframe.src = `https://dexscreener.com/cronos/${cleanId}?embed=1&theme=dark`;
       }
     }
 
@@ -340,16 +321,12 @@
       document.getElementById('pairInput').value = address;
       updatePair();
 
-      // Highlight active button
       document.querySelectorAll('.preset-pill').forEach(el => el.classList.remove('active'));
       if (btnElement) btnElement.classList.add('active');
     }
 
-    // Allow pressing "Enter" in the input field
     document.getElementById('pairInput').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        updatePair();
-      }
+      if (e.key === 'Enter') updatePair();
     });
   </script>
 </body>
