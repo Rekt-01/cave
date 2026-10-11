@@ -114,14 +114,81 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 8px 12px;
+      padding: 10px 14px;
       width: 100%;
       max-width: 1800px;
       margin: 0 auto;
-      gap: 8px;
+      gap: 10px;
     }
 
-    /* Controls Bar */
+    /* Token Banner with Picture */
+    .token-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .token-identity {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .token-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      background: #181824;
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    .token-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .token-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .token-symbol {
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+    }
+
+    .token-address {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: color 0.2s;
+    }
+
+    .token-address:hover {
+      color: #fff;
+    }
+
+    /* Search and Controls */
     .controls-container {
       display: flex;
       flex-direction: column;
@@ -130,7 +197,6 @@
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 8px 12px;
-      flex-shrink: 0;
     }
 
     .top-controls {
@@ -146,7 +212,7 @@
       align-items: center;
       gap: 8px;
       flex: 1;
-      min-width: 220px;
+      min-width: 240px;
     }
 
     .pair-input {
@@ -174,6 +240,11 @@
       font-weight: 600;
       font-size: 0.8rem;
       cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .load-btn:hover {
+      opacity: 0.9;
     }
 
     .live-status {
@@ -193,7 +264,7 @@
       box-shadow: 0 0 6px var(--green);
     }
 
-    /* Quick Test buttons */
+    /* Preset list */
     .presets-row {
       display: flex;
       align-items: center;
@@ -216,6 +287,10 @@
       font-size: 0.72rem;
       font-family: 'JetBrains Mono', monospace;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
     }
 
     .preset-pill:hover, .preset-pill.active {
@@ -224,7 +299,7 @@
       color: #fff;
     }
 
-    /* Terminal Frame with fixed flex containment */
+    /* Terminal Frame */
     .terminal-frame {
       position: relative;
       flex: 1 1 auto;
@@ -240,8 +315,8 @@
 
     @media (min-width: 769px) {
       .terminal-frame {
-        height: calc(100vh - 230px);
-        min-height: 580px;
+        height: calc(100vh - 270px);
+        min-height: 560px;
       }
     }
 
@@ -254,7 +329,7 @@
       border: 0;
     }
 
-    /* Ecosystem links footer */
+    /* Ecosystem hub footer */
     .ecosystem-hub {
       background: var(--card-bg);
       border-top: 1px solid var(--border);
@@ -331,7 +406,7 @@
     </div>
     
     <div class="nav-actions">
-      <a href="#" id="directDexLink" target="_blank" rel="noopener noreferrer" class="external-btn" title="Open full chart in app">
+      <a href="#" id="directDexLink" target="_blank" rel="noopener noreferrer" class="external-btn" title="Open chart directly in DexScreener">
         Open App ↗
       </a>
       <a href="index.html" class="back-btn">← Back</a>
@@ -340,6 +415,35 @@
 
   <!-- Terminal Body -->
   <main>
+    <!-- Live Loaded Token Header with Image -->
+    <div class="token-card">
+      <div class="token-identity">
+        <!-- Token Image (Pre-loaded with CAVE Caveman/Ape profile) -->
+        <img 
+          id="tokenImage" 
+          class="token-avatar" 
+          src="https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=100&h=100&fit=crop&crop=faces" 
+          alt="Token Avatar"
+          onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=CAVE'" 
+        />
+        <div class="token-info">
+          <div class="token-title">
+            <span id="tokenName">Cave Token</span> 
+            <span id="tokenTicker" class="token-symbol">$CAVE</span>
+          </div>
+          <div class="token-address" onclick="copyTokenAddress()" title="Click to copy address">
+            <span id="addressDisplay">0xe61d...b6d6</span> 📋
+          </div>
+        </div>
+      </div>
+
+      <div class="live-status">
+        <span class="status-dot"></span>
+        DEX FEED ACTIVE
+      </div>
+    </div>
+
+    <!-- Controls & Presets -->
     <div class="controls-container">
       <div class="top-controls">
         <div class="pair-picker">
@@ -347,28 +451,39 @@
             type="text" 
             id="pairInput" 
             class="pair-input" 
-            placeholder="Paste Cronos Pair Address" 
+            placeholder="Paste Cronos Pair Address (0x...)" 
             value="0xe61db569e231b3f5530168aa2c9d50246525b6d6"
           />
           <button class="load-btn" onclick="updatePair()">Load</button>
         </div>
-
-        <div class="live-status">
-          <span class="status-dot"></span>
-          FEED LIVE
-        </div>
       </div>
 
       <div class="presets-row">
-        <span class="presets-label">Pairs:</span>
-        <button class="preset-pill active" onclick="loadPreset('0xe61db569e231b3f5530168aa2c9d50246525b6d6', this)">WCRO/USDC</button>
-        <button class="preset-pill" onclick="loadPreset('0xbf62c67ea509e86f07c8c69d0286c0636c50270b', this)">VVS/WCRO</button>
-        <button class="preset-pill" onclick="loadPreset('0x9e44225db6a7c0d31f081d9ffa658979b8e523db', this)">CRONUS</button>
-        <button class="preset-pill" onclick="loadPreset('0x553255ff6e6545eb5b01449c253b27b68b7ca2c1', this)">CORGIAI</button>
+        <span class="presets-label">Preset Pairs:</span>
+        <button 
+          class="preset-pill active" 
+          onclick="loadPreset('0xe61db569e231b3f5530168aa2c9d50246525b6d6', 'Cave Token', '$CAVE', 'https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=100&h=100&fit=crop&crop=faces', this)">
+          🦍 $CAVE
+        </button>
+        <button 
+          class="preset-pill" 
+          onclick="loadPreset('0x553255ff6e6545eb5b01449c253b27b68b7ca2c1', 'CorgiAI', '$CORGI', 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=100&h=100&fit=crop', this)">
+          🐕 $CORGI
+        </button>
+        <button 
+          class="preset-pill" 
+          onclick="loadPreset('0xbf62c67ea509e86f07c8c69d0286c0636c50270b', 'VVS Finance', '$VVS', 'https://api.dicebear.com/7.x/identicon/svg?seed=vvs', this)">
+          💎 $VVS
+        </button>
+        <button 
+          class="preset-pill" 
+          onclick="loadPreset('0x9e44225db6a7c0d31f081d9ffa658979b8e523db', 'Cronus Meme', '$CRONUS', 'https://api.dicebear.com/7.x/bottts/svg?seed=cronus', this)">
+          ⚡ $CRONUS
+        </button>
       </div>
     </div>
 
-    <!-- DexScreener Live Frame with Mobile Permissions Enabled -->
+    <!-- DexScreener Live Frame -->
     <div class="terminal-frame">
       <iframe 
         id="dexIframe"
@@ -381,45 +496,40 @@
     </div>
   </main>
 
-  <!-- Ecosystem Directory Bottom Hub -->
+  <!-- Ecosystem Directory Footer -->
   <footer class="ecosystem-hub">
     <div class="hub-title">Cronos Ecosystem Directory</div>
     <div class="links-grid">
-      
       <a href="https://cronos.org" target="_blank" rel="noopener noreferrer" class="eco-link">
         <span class="eco-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/></svg></span>
         Cronos.org
       </a>
-
       <a href="https://cronoscan.com" target="_blank" rel="noopener noreferrer" class="eco-link">
         <span class="eco-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
         Cronoscan
       </a>
-
       <a href="https://vvs.finance" target="_blank" rel="noopener noreferrer" class="eco-link">
         <span class="eco-icon"><svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/></svg></span>
         VVS Finance
       </a>
-
       <a href="https://dexscreener.com/cronos" target="_blank" rel="noopener noreferrer" class="eco-link">
         <span class="eco-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
         DexScreener
       </a>
-
       <a href="https://defillama.com/chain/Cronos" target="_blank" rel="noopener noreferrer" class="eco-link">
         <span class="eco-icon"><svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg></span>
         DeFiLlama
       </a>
-
       <a href="https://ebisusbay.com" target="_blank" rel="noopener noreferrer" class="eco-link">
         <span class="eco-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/></svg></span>
         Ebisu's Bay
       </a>
-
     </div>
   </footer>
 
   <script>
+    let currentAddress = "0xe61db569e231b3f5530168aa2c9d50246525b6d6";
+
     function updatePair() {
       const input = document.getElementById('pairInput').value.trim();
       const iframe = document.getElementById('dexIframe');
@@ -427,27 +537,47 @@
       
       if (input) {
         let cleanId = input.replace('https://dexscreener.com/cronos/', '').replace(/\?.*$/, '');
-        const embedUrl = `https://dexscreener.com/cronos/${cleanId}?embed=1&theme=dark`;
-        iframe.src = embedUrl;
+        currentAddress = cleanId;
+        
+        iframe.src = `https://dexscreener.com/cronos/${cleanId}?embed=1&theme=dark`;
         if (directLink) {
           directLink.href = `https://dexscreener.com/cronos/${cleanId}`;
         }
+
+        // Format shortened address
+        const shortAddr = cleanId.length > 10 
+          ? `${cleanId.substring(0, 6)}...${cleanId.substring(cleanId.length - 4)}` 
+          : cleanId;
+        document.getElementById('addressDisplay').innerText = shortAddr;
       }
     }
 
-    function loadPreset(address, btnElement) {
+    function loadPreset(address, name, ticker, imageSrc, btnElement) {
       document.getElementById('pairInput').value = address;
+      document.getElementById('tokenName').innerText = name;
+      document.getElementById('tokenTicker').innerText = ticker;
+      document.getElementById('tokenImage').src = imageSrc;
+
       updatePair();
 
       document.querySelectorAll('.preset-pill').forEach(el => el.classList.remove('active'));
       if (btnElement) btnElement.classList.add('active');
     }
 
+    function copyTokenAddress() {
+      navigator.clipboard.writeText(currentAddress);
+      const addrEl = document.getElementById('addressDisplay');
+      const original = addrEl.innerText;
+      addrEl.innerText = "COPIED! ✓";
+      setTimeout(() => {
+        addrEl.innerText = original;
+      }, 1500);
+    }
+
     document.getElementById('pairInput').addEventListener('keypress', function(e) {
       if (e.key === 'Enter') updatePair();
     });
 
-    // Initialize external button href on load
     updatePair();
   </script>
 </body>
