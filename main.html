@@ -18,6 +18,7 @@
       --accent-glow: rgba(168, 85, 247, 0.4);
       --green: #22c55e;
       --text-muted: #8e8ea0;
+      --surface-hover: rgba(255, 255, 255, 0.05);
     }
 
     * {
@@ -47,7 +48,7 @@
       background: rgba(14, 14, 20, 0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 10px 16px;
+      padding: 10px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -106,7 +107,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 10px 14px 14px 14px;
+      padding: 10px 14px 10px 14px;
       width: 100%;
       max-width: 1800px;
       margin: 0 auto;
@@ -166,6 +167,11 @@
       font-weight: 600;
       font-size: 0.8rem;
       cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .load-btn:hover {
+      opacity: 0.9;
     }
 
     .live-status {
@@ -208,6 +214,7 @@
       font-size: 0.72rem;
       font-family: 'JetBrains Mono', monospace;
       cursor: pointer;
+      transition: all 0.2s;
     }
 
     .preset-pill:hover, .preset-pill.active {
@@ -221,22 +228,17 @@
       position: relative;
       flex: 1;
       width: 100%;
-      min-height: 650px;
+      min-height: 520px;
       background: #000;
       border: 1px solid var(--border);
       border-radius: 10px;
       overflow: hidden;
     }
 
-    /* Mobile specific adjustment so it fills tall mobile viewports */
     @media (max-width: 768px) {
-      main {
-        padding: 8px;
-        gap: 8px;
-      }
       .terminal-frame {
-        min-height: 75vh;
-        min-height: 75dvh;
+        min-height: 60vh;
+        min-height: 60dvh;
       }
     }
 
@@ -247,6 +249,85 @@
       width: 100%;
       height: 100%;
       border: 0;
+    }
+
+    /* Ecosystem links footer section */
+    .ecosystem-hub {
+      background: var(--card-bg);
+      border-top: 1px solid var(--border);
+      padding: 12px 16px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .hub-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .links-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .eco-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #07070b;
+      border: 1px solid var(--border);
+      color: #e2e8f0;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .eco-link:hover {
+      border-color: var(--accent);
+      background: rgba(168, 85, 247, 0.12);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .eco-icon {
+      width: 15px;
+      height: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .eco-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .sub-footer {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 2px;
     }
   </style>
 </head>
@@ -274,7 +355,7 @@
             id="pairInput" 
             class="pair-input" 
             placeholder="Paste Cronos Pair Address" 
-            value="0x9e44225db6a7c0d31f081d9ffa658979b8e523db"
+            value="0xe61db569e231b3f5530168aa2c9d50246525b6d6"
           />
           <button class="load-btn" onclick="updatePair()">Load</button>
         </div>
@@ -289,13 +370,13 @@
         <span class="presets-label">Pairs:</span>
         <button class="preset-pill active" onclick="loadPreset('0xe61db569e231b3f5530168aa2c9d50246525b6d6', this)">WCRO / USDC</button>
         <button class="preset-pill" onclick="loadPreset('0xbf62c67ea509e86f07c8c69d0286c0636c50270b', this)">VVS / WCRO</button>
+        <button class="preset-pill" onclick="loadPreset('0x9e44225db6a7c0d31f081d9ffa658979b8e523db', this)">CRONUS / WCRO</button>
         <button class="preset-pill" onclick="loadPreset('0x553255ff6e6545eb5b01449c253b27b68b7ca2c1', this)">CORGIAI / WCRO</button>
       </div>
     </div>
 
     <!-- DexScreener Live Frame -->
     <div class="terminal-frame">
-      <!-- Enabled trades and responsive layout parameters so TradingView scales to 100% of the box -->
       <iframe 
         id="dexIframe"
         src="https://dexscreener.com/cronos/0xe61db569e231b3f5530168aa2c9d50246525b6d6?embed=1&theme=dark"
@@ -305,6 +386,65 @@
     </div>
   </main>
 
+  <!-- Ecosystem Directory Bottom Hub with Icons -->
+  <footer class="ecosystem-hub">
+    <div class="hub-title">Cronos Ecosystem Directory</div>
+    <div class="links-grid">
+      
+      <!-- 1. Cronos Official Core Hub -->
+      <a href="https://cronos.org" target="_blank" rel="noopener noreferrer" class="eco-link" title="Cronos Official Network">
+        <span class="eco-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </span>
+        Cronos.org
+      </a>
+
+      <!-- 2. Block Explorer: Cronoscan -->
+      <a href="https://cronoscan.com" target="_blank" rel="noopener noreferrer" class="eco-link" title="Cronoscan Block Explorer">
+        <span class="eco-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </span>
+        Cronoscan
+      </a>
+
+      <!-- 3. Primary DEX: VVS Finance -->
+      <a href="https://vvs.finance" target="_blank" rel="noopener noreferrer" class="eco-link" title="VVS Finance DEX">
+        <span class="eco-icon">
+          <svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+        </span>
+        VVS Finance
+      </a>
+
+      <!-- 4. DexScreener Cronos -->
+      <a href="https://dexscreener.com/cronos" target="_blank" rel="noopener noreferrer" class="eco-link" title="DexScreener Cronos Hub">
+        <span class="eco-icon">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </span>
+        DexScreener
+      </a>
+
+      <!-- 5. Analytics: DeFiLlama -->
+      <a href="https://defillama.com/chain/Cronos" target="_blank" rel="noopener noreferrer" class="eco-link" title="DeFiLlama Cronos Metrics">
+        <span class="eco-icon">
+          <svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+        </span>
+        DeFiLlama
+      </a>
+
+      <!-- 6. NFT Marketplace: Ebisu's Bay -->
+      <a href="https://ebisusbay.com" target="_blank" rel="noopener noreferrer" class="eco-link" title="Ebisu's Bay NFT Marketplace">
+        <span class="eco-icon">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        </span>
+        Ebisu's Bay
+      </a>
+
+    </div>
+    <div class="sub-footer">
+      welcome to cave • Cronos Network
+    </div>
+  </footer>
+
   <script>
     function updatePair() {
       const input = document.getElementById('pairInput').value.trim();
@@ -312,7 +452,6 @@
       
       if (input) {
         let cleanId = input.replace('https://dexscreener.com/cronos/', '').replace(/\?.*$/, '');
-        // Removed &trades=0 so Dexscreener doesn't render an empty black placeholder box
         iframe.src = `https://dexscreener.com/cronos/${cleanId}?embed=1&theme=dark`;
       }
     }
