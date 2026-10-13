@@ -61,15 +61,40 @@
             background-size: 240px 240px;
         }
 
-        /* --- Mascot Floating Animation --- */
+        /* --- Mascot Dynamic Idle & Hover Movement --- */
         .float-anim {
-            animation: float 4s ease-in-out infinite;
-            filter: drop-shadow(0 0 25px rgba(0, 255, 76, 0.45));
+            animation: dinoAlive 5s ease-in-out infinite;
+            transform-origin: center bottom;
+            will-change: transform, filter;
+            transition: transform 0.3s ease;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        .float-anim:hover {
+            transform: scale(1.06) translateY(-8px);
+            filter: drop-shadow(0 0 35px rgba(0, 255, 76, 0.7));
+        }
+
+        @keyframes dinoAlive {
+            0% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+                filter: drop-shadow(0 15px 25px rgba(0, 255, 76, 0.4));
+            }
+            25% {
+                transform: translateY(-14px) rotate(1.5deg) scale(1.02);
+                filter: drop-shadow(0 20px 32px rgba(0, 255, 76, 0.55));
+            }
+            50% {
+                transform: translateY(-6px) rotate(-0.5deg) scale(1.01);
+                filter: drop-shadow(0 12px 22px rgba(0, 240, 255, 0.45));
+            }
+            75% {
+                transform: translateY(-18px) rotate(-1.5deg) scale(1.025);
+                filter: drop-shadow(0 22px 34px rgba(0, 255, 76, 0.58));
+            }
+            100% {
+                transform: translateY(0px) rotate(0deg) scale(1);
+                filter: drop-shadow(0 15px 25px rgba(0, 255, 76, 0.4));
+            }
         }
 
         /* --- Bottom Sheet Auto Slide-Up --- */
@@ -158,12 +183,12 @@
             </div>
         </header>
 
-        <!-- Static Mascot Image -->
+        <!-- Dynamic Animated Mascot Image -->
         <main class="flex-1 w-full flex items-center justify-center px-4 relative z-0 pb-16">
             <img 
                 src="IMG_5639.png" 
                 alt="Ultisaur" 
-                class="float-anim max-h-[38vh] sm:max-h-[44vh] max-w-[85vw] object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)]"
+                class="float-anim max-h-[38vh] sm:max-h-[44vh] max-w-[85vw] object-contain cursor-pointer"
             >
         </main>
 
@@ -231,8 +256,8 @@
                 <h2 class="font-display text-4xl text-white font-extrabold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)] mt-3">TRADING TERMINAL</h2>
             </div>
 
-            <!-- Open DEX -->
-            <button id="btnOpenDex" type="button" class="w-full max-w-xs bg-black/85 border-2 border-[#00ff4c] text-[#00ff4c] font-black text-lg py-5 px-6 rounded-2xl flex items-center justify-center space-x-3 shadow-[0_0_30px_rgba(0,255,76,0.4)] active:scale-95 transition-all">
+            <!-- Open DEX (Revealed 1 second after playback) -->
+            <button id="btnOpenDex" type="button" class="w-full max-w-xs bg-black/85 border-2 border-[#00ff4c] text-[#00ff4c] font-black text-lg py-5 px-6 rounded-2xl flex items-center justify-center space-x-3 shadow-[0_0_30px_rgba(0,255,76,0.4)] active:scale-95 transition-all duration-700 opacity-0 translate-y-6 pointer-events-none">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
                 </svg>
@@ -291,24 +316,53 @@
             const btnCloseDex = document.getElementById('btnCloseDex');
             const btnBackToStart = document.getElementById('btnBackToStart');
 
-            // Preload video in buffer immediately on boot
+            let dexShowTimeout = null;
+
             if (bgVideo) {
                 bgVideo.muted = true;
                 bgVideo.load();
             }
 
-            // Switch to Page 2 instantly without buffer delay
+            function showDexButton() {
+                btnOpenDex.classList.remove('opacity-0', 'translate-y-6', 'pointer-events-none');
+                btnOpenDex.classList.add('opacity-100', 'translate-y-0');
+            }
+
+            function hideDexButton() {
+                if (dexShowTimeout) clearTimeout(dexShowTimeout);
+                btnOpenDex.classList.add('opacity-0', 'translate-y-6', 'pointer-events-none');
+                btnOpenDex.classList.remove('opacity-100', 'translate-y-0');
+            }
+
+            if (bgVideo) {
+                bgVideo.addEventListener('playing', () => {
+                    if (page2.style.display === 'block') {
+                        if (dexShowTimeout) clearTimeout(dexShowTimeout);
+                        dexShowTimeout = setTimeout(showDexButton, 1000);
+                    }
+                });
+            }
+
             btnContinue.addEventListener('click', () => {
+                hideDexButton();
                 page1.style.display = 'none';
                 page2.style.display = 'block';
 
                 if (bgVideo) {
-                    bgVideo.play().catch(e => console.log('Autoplay handled:', e));
+                    const playPromise = bgVideo.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(e => {
+                            console.log('Autoplay handled:', e);
+                            dexShowTimeout = setTimeout(showDexButton, 1000);
+                        });
+                    }
+                } else {
+                    dexShowTimeout = setTimeout(showDexButton, 1000);
                 }
             });
 
-            // Return to Page 1
             btnBackToStart.addEventListener('click', () => {
+                hideDexButton();
                 page2.style.display = 'none';
                 page1.style.display = 'flex';
                 if (bgVideo) {
@@ -316,12 +370,10 @@
                 }
             });
 
-            // Open DEX
             btnOpenDex.addEventListener('click', () => {
                 dexModal.style.display = 'flex';
             });
 
-            // Close DEX
             btnCloseDex.addEventListener('click', () => {
                 dexModal.style.display = 'none';
             });
