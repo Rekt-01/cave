@@ -1,1 +1,323 @@
-       
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>ULTISAUR | App</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Montserrat:wght@900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        neon: {
+                            green: '#00ff4c',
+                            cyan: '#00f0ff',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            height: 100dvh;
+            overflow: hidden;
+            background-color: #03060a;
+            color: white;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* --- Page 1: Starry Background --- */
+        .starry-bg {
+            background-color: #020409;
+            background-image: 
+                radial-gradient(1px 1px at 25px 35px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(1.2px 1.2px at 60px 80px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 120px 45px, rgba(255,255,255,0.9), rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 190px 140px, #00f0ff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 260px 90px, #39ff14, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 240px 240px;
+        }
+
+        /* --- Mascot Floating Animation --- */
+        .float-anim {
+            animation: float 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 25px rgba(0, 255, 76, 0.45));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* --- Bottom Sheet Auto Slide-Up --- */
+        .bottom-sheet {
+            transform: translateY(105%);
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+            background: linear-gradient(180deg, rgba(12, 17, 24, 0.96) 0%, rgba(5, 7, 10, 1) 100%);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(0, 255, 76, 0.25);
+            box-shadow: 0 -10px 45px rgba(0, 0, 0, 0.9);
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); }
+        }
+
+        /* --- Video Background (Page 2) --- */
+        .bg-video-wrapper {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .bg-video-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* --- Buttons --- */
+        .btn-green-solid {
+            background: #00ff4c;
+            color: #000;
+            font-weight: 800;
+            box-shadow: 0 0 20px rgba(0, 255, 76, 0.4);
+            transition: all 0.2s ease;
+        }
+        .btn-green-solid:active {
+            transform: scale(0.98);
+        }
+
+        .btn-wallet-outline {
+            background: #000000;
+            border: 2px solid #00ff4c;
+            color: #00ff4c;
+            box-shadow: 0 0 15px rgba(0, 255, 76, 0.2);
+            transition: all 0.2s ease;
+        }
+        .btn-wallet-outline:active {
+            background: rgba(0, 255, 76, 0.1);
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= PAGE 1: LANDING ================= -->
+    <div id="page1" class="fixed inset-0 w-full h-full starry-bg flex flex-col justify-between overflow-hidden z-20">
+        
+        <!-- Header -->
+        <header class="w-full pt-4 pb-2 px-4 flex flex-col items-center shrink-0 z-10">
+            <!-- Powered by Cronos -->
+            <div class="flex items-center space-x-1.5 opacity-90 text-[12px] font-semibold text-gray-300 mb-1">
+                <span class="text-gray-400 font-normal">Powered by</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-400">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+                <span class="tracking-wider text-white">CRONOS</span>
+            </div>
+
+            <!-- Title -->
+            <h1 class="font-display text-4xl sm:text-5xl font-black tracking-tight text-[#00ff4c] drop-shadow-[0_0_20px_rgba(0,255,76,0.7)] leading-none mt-1">
+                ULTISAUR
+            </h1>
+
+            <!-- $SAUR Ticker Pill -->
+            <div class="mt-2 inline-flex items-center px-3.5 py-0.5 rounded-full bg-black/60 border border-[#00ff4c]/60 shadow-[0_0_12px_rgba(0,255,76,0.3)]">
+                <span class="font-mono font-extrabold text-xs text-[#00ff4c] tracking-widest">$SAUR</span>
+            </div>
+        </header>
+
+        <!-- Static Image of Mascot -->
+        <main class="flex-1 w-full flex items-center justify-center px-4 relative z-0 pb-16">
+            <img 
+                src="IMG_5639.png" 
+                alt="Ultisaur" 
+                class="float-anim max-h-[38vh] sm:max-h-[44vh] max-w-[85vw] object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)]"
+            >
+        </main>
+
+        <!-- Slide-Up Action Drawer -->
+        <section class="bottom-sheet absolute bottom-0 left-0 w-full rounded-t-[28px] pt-3 pb-6 px-6 z-20">
+            <div class="w-10 h-1 bg-white/20 rounded-full mx-auto mb-4"></div>
+            
+            <div class="max-w-sm mx-auto space-y-3">
+                <!-- Discord Button -->
+                <a href="https://discord.gg/XvSqECzYv" target="_blank" rel="noopener noreferrer" class="btn-green-solid w-full flex items-center justify-center py-3.5 rounded-2xl text-base tracking-wide font-extrabold">
+                    Join the Horde
+                </a>
+                
+                <!-- Connect Wallet -->
+                <button type="button" class="btn-wallet-outline w-full py-3.5 rounded-2xl text-base font-bold flex items-center justify-center space-x-2">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path>
+                        <path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path>
+                        <path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"></path>
+                    </svg>
+                    <span>Connect Wallet</span>
+                </button>
+
+                <!-- Continue to Page 2 -->
+                <button id="btnContinue" type="button" class="w-full bg-[#11161d] border border-white/10 text-gray-200 py-3.5 rounded-2xl text-base font-semibold hover:bg-white/10 active:scale-[0.98] transition-all">
+                    Continue as guest
+                </button>
+
+                <!-- Terms -->
+                <p class="text-center text-[10px] text-gray-400 pt-1 leading-tight">
+                    By signing up, you agree to our <br>
+                    <a href="#" class="underline hover:text-white">Terms of Service</a> and 
+                    <a href="#" class="underline hover:text-white">Privacy Policy</a>.
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <!-- ================= PAGE 2: TERMINAL WITH VIDEO BACKGROUND ================= -->
+    <div id="page2" class="fixed inset-0 w-full h-full overflow-hidden bg-black z-10" style="display: none;">
+        
+        <!-- Fullscreen Video Background -->
+        <div class="bg-video-wrapper">
+            <video 
+                id="bgVideo"
+                autoplay 
+                loop 
+                muted 
+                playsinline 
+                webkit-playsinline>
+                <source src="video.MP4" type="video/mp4">
+                <source src="video.mp4" type="video/mp4">
+                <source src="Grok_video_2026-10-13-12-10-17.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- Darkness Overlay -->
+        <div class="absolute inset-0 bg-black/65 backdrop-blur-[1px] z-[2]"></div>
+
+        <!-- Terminal Buttons -->
+        <div class="relative z-10 w-full h-full flex flex-col items-center justify-center p-6">
+            <div class="text-center mb-8">
+                <span class="text-neon-cyan font-mono text-xs tracking-widest bg-black/80 px-3.5 py-1 rounded-full border border-cyan-500/50 shadow-[0_0_12px_rgba(0,240,255,0.3)]">CRONOS NETWORK ONLINE</span>
+                <h2 class="font-display text-4xl text-white font-extrabold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)] mt-3">TRADING TERMINAL</h2>
+            </div>
+
+            <button id="btnOpenDex" type="button" class="w-full max-w-xs bg-black/85 border-2 border-[#00ff4c] text-[#00ff4c] font-black text-lg py-5 px-6 rounded-2xl flex items-center justify-center space-x-3 shadow-[0_0_30px_rgba(0,255,76,0.4)] active:scale-95 transition-all">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+                <span>OPEN CRONOS DEX</span>
+            </button>
+
+            <button id="btnBackToStart" type="button" class="mt-8 text-gray-300 text-sm hover:text-white underline underline-offset-4 active:scale-95 transition-all bg-black/60 px-4 py-2 rounded-lg">
+                ← Return to Launchpad
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= DEX SCREENER MODAL ================= -->
+    <div id="dexModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col" style="display: none;">
+        <header class="w-full h-14 bg-[#0d1117] border-b border-[#00ff4c]/30 flex justify-between items-center px-4 shrink-0">
+            <div class="flex items-center space-x-2">
+                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                <span class="ml-2 font-mono text-[#00ff4c] text-xs font-bold tracking-wider">CRONOS // DEX SCREENER</span>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <a href="https://dexscreener.com/cronos/0x8d429c3c3edf764372f755b41aa7d68aecefd28b" target="_blank" rel="noopener noreferrer" class="text-xs text-gray-300 hover:text-white underline hidden sm:inline">
+                    Open in Tab ↗
+                </a>
+                <button id="btnCloseDex" type="button" class="text-gray-400 hover:text-white p-2 rounded-lg bg-white/5 active:scale-90">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="w-full flex-1 relative bg-[#080808]">
+            <iframe 
+                src="https://dexscreener.com/cronos/0x8d429c3c3edf764372f755b41aa7d68aecefd28b?embed=1&theme=dark" 
+                class="w-full h-full border-0"
+                title="Cronos Live Meme Dex">
+            </iframe>
+        </main>
+    </div>
+
+    <!-- Navigation Controller -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const page1 = document.getElementById('page1');
+            const page2 = document.getElementById('page2');
+            const bgVideo = document.getElementById('bgVideo');
+            const dexModal = document.getElementById('dexModal');
+            
+            const btnContinue = document.getElementById('btnContinue');
+            const btnOpenDex = document.getElementById('btnOpenDex');
+            const btnCloseDex = document.getElementById('btnCloseDex');
+            const btnBackToStart = document.getElementById('btnBackToStart');
+
+            // Switch to Page 2
+            btnContinue.addEventListener('click', () => {
+                page1.style.display = 'none';
+                page2.style.display = 'block';
+
+                if (bgVideo) {
+                    bgVideo.currentTime = 0;
+                    bgVideo.play().catch(e => console.log('Autoplay handled:', e));
+                }
+            });
+
+            // Return to Page 1
+            btnBackToStart.addEventListener('click', () => {
+                page2.style.display = 'none';
+                page1.style.display = 'flex';
+                if (bgVideo) {
+                    bgVideo.pause();
+                }
+            });
+
+            // Open DEX
+            btnOpenDex.addEventListener('click', () => {
+                dexModal.style.display = 'flex';
+            });
+
+            // Close DEX
+            btnCloseDex.addEventListener('click', () => {
+                dexModal.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
