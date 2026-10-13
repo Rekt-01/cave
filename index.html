@@ -1,495 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>welcome to cave</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ULTISAUR | Enter the Horde</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@900&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            green: '#39ff14',
+                            cyan: '#00f0ff',
+                            dark: '#030a06',
+                            glass: 'rgba(10, 20, 15, 0.65)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
-  <!-- High-End Luxury Calligraphy & Fintech Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base reset for app-like feel */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #030a06;
+            color: white;
+            overscroll-behavior: none;
+            touch-action: none;
+            -webkit-font-smoothing: antialiased;
+        }
 
-  <style>
-    :root {
-      --bg: #030306;
-      --accent: #a855f7;
-      --accent-bright: #c084fc;
-      --green: #22c55e;
-    }
+        /* Dynamic Glowing Background Orbs */
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.4;
+            z-index: 0;
+            pointer-events: none;
+            animation: drift 20s infinite alternate ease-in-out;
+        }
+        
+        .orb-green {
+            background: #39ff14;
+            width: 50vw;
+            height: 50vw;
+            top: -10%;
+            left: -10%;
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+        .orb-cyan {
+            background: #00f0ff;
+            width: 45vw;
+            height: 45vw;
+            bottom: -5%;
+            right: -10%;
+            animation-delay: -5s;
+        }
 
-    body {
-      background-color: var(--bg);
-      color: #ffffff;
-      min-height: 100vh;
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      transition: opacity 0.35s ease, filter 0.35s ease;
-      position: relative;
-      padding: 20px 16px;
-    }
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(8vw, 8vh) scale(1.15); }
+        }
 
-    /* Ambient luxury dark purple glow */
-    .ambient-glow {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: min(90vw, 650px);
-      height: min(65vw, 420px);
-      background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.15) 0%, rgba(99, 102, 241, 0.06) 50%, rgba(3, 3, 6, 0) 75%);
-      pointer-events: none;
-      z-index: 0;
-      filter: blur(24px);
-    }
+        /* Cyber Grid Overlay */
+        .cyber-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(57, 255, 20, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(57, 255, 20, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+            pointer-events: none;
+            perspective: 500px;
+            transform: scale(1.2);
+            mask-image: radial-gradient(circle at center, black 20%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black 20%, transparent 80%);
+        }
 
-    .container {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      width: 100%;
-      max-width: 920px;
-    }
+        /* Neon Stroke Text Effect */
+        .text-stroke-neon {
+            font-family: 'Montserrat', sans-serif;
+            color: transparent;
+            -webkit-text-stroke: 2px rgba(57, 255, 20, 0.3);
+            text-shadow: 0 0 30px rgba(0, 240, 255, 0.15);
+            letter-spacing: -0.01em;
+            line-height: 0.8;
+            opacity: 0.8;
+        }
 
-    /* Minimalist status badge */
-    .network-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: clamp(0.68rem, 2vw, 0.76rem);
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.45);
-      margin-bottom: clamp(16px, 3vh, 26px);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
+        /* Floating Mascot Animation */
+        .float-mascot {
+            animation: float 4.5s ease-in-out infinite;
+            /* Drop shadow specifically makes transparent PNGs pop off the background */
+            filter: drop-shadow(0 25px 35px rgba(0, 240, 255, 0.3)) drop-shadow(0 0 60px rgba(57, 255, 20, 0.15));
+        }
 
-    .network-badge .dot {
-      width: 6px;
-      height: 6px;
-      background: var(--green);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--green);
-    }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
 
-    /* Canvas stage container with cinematic scale effect */
-    .canvas-stage {
-      width: 100%;
-      max-width: 840px;
-      aspect-ratio: 16 / 4.8;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transform: scale(1);
-      transition: transform 0.65s cubic-bezier(0.2, 0.9, 0.3, 1), filter 0.65s ease;
-      will-change: transform;
-    }
+        /* Glassmorphism Panel */
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(10, 20, 15, 0.8) 0%, rgba(5, 10, 7, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(57, 255, 20, 0.15);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+        }
 
-    /* The cinematic focus burst when signature finishes */
-    .canvas-stage.signature-focus {
-      transform: scale(1.08);
-      filter: drop-shadow(0 0 24px rgba(168, 85, 247, 0.6));
-    }
+        /* Neon Gradient Button */
+        .btn-primary {
+            background: linear-gradient(90deg, #00f0ff 0%, #39ff14 100%);
+            color: #000;
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(57, 255, 20, 0.5);
+            transform: translateY(-2px);
+        }
 
-    .canvas-stage.signature-settled {
-      transform: scale(1);
-      filter: drop-shadow(0 0 16px rgba(168, 85, 247, 0.35));
-    }
-
-    #cursiveCanvas {
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
-
-    /* Enter button wrapper */
-    .btn-container {
-      margin-top: clamp(24px, 5vh, 42px);
-      opacity: 0;
-      transform: translateY(14px) scale(0.97);
-      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-                  transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-      pointer-events: none;
-    }
-
-    .btn-container.show {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      pointer-events: auto;
-    }
-
-    /* Executive luxury CTA button */
-    .enter-btn {
-      position: relative;
-      background: linear-gradient(135deg, rgba(22, 22, 32, 0.95), rgba(10, 10, 15, 0.95));
-      color: #fafafa;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      padding: clamp(12px, 2.8vw, 15px) clamp(32px, 6vw, 46px);
-      font-size: clamp(0.88rem, 2.2vw, 1rem);
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      border-radius: 9999px;
-      cursor: pointer;
-      backdrop-filter: blur(12px);
-      box-shadow: 
-        0 10px 28px rgba(0, 0, 0, 0.75),
-        inset 0 1px 1px rgba(255, 255, 255, 0.2),
-        0 0 0 1px rgba(168, 85, 247, 0.1);
-      transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      outline: none;
-    }
-
-    .enter-btn .arrow-icon {
-      font-size: 0.95rem;
-      transition: transform 0.22s ease;
-      color: var(--accent-bright);
-    }
-
-    .enter-btn:hover {
-      border-color: var(--accent);
-      box-shadow: 
-        0 12px 35px rgba(0, 0, 0, 0.85),
-        0 0 30px rgba(168, 85, 247, 0.55),
-        inset 0 1px 1px rgba(255, 255, 255, 0.35);
-      transform: translateY(-2px) scale(1.03);
-      color: #ffffff;
-    }
-
-    .enter-btn:hover .arrow-icon {
-      transform: translateX(4px);
-    }
-
-    .enter-btn:active {
-      transform: translateY(1px) scale(0.98);
-    }
-  </style>
+        /* Glow Border Button */
+        .btn-secondary {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            color: #00f0ff;
+            box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            border-color: #00f0ff;
+            background: rgba(0, 240, 255, 0.05);
+            box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.2), 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+    </style>
 </head>
-<body>
+<body class="flex flex-col h-[100dvh] w-full relative selection:bg-brand-cyan selection:text-black">
 
-  <div class="ambient-glow"></div>
+    <!-- Animated Orbs -->
+    <div class="ambient-orb orb-green"></div>
+    <div class="ambient-orb orb-cyan"></div>
+    
+    <!-- Subtle Grid Overlay -->
+    <div class="cyber-grid"></div>
 
-  <div class="container">
-    <div class="network-badge">
-      <span class="dot"></span>
-      <span>Cronos Network // System Ready</span>
-    </div>
+    <header class="w-full flex justify-center items-center h-[12%] min-h-[70px] z-20 relative px-4 pt-4">
+        <div class="flex items-center space-x-2 text-xs sm:text-sm font-medium tracking-widest uppercase">
+            <span class="text-gray-400">Powered by</span>
+            <div class="flex items-center space-x-2 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 backdrop-blur-sm">
+                <!-- Glowing Dot -->
+                <span class="relative flex h-2.5 w-2.5">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0052FF] opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#0052FF] shadow-[0_0_8px_#0052FF]"></span>
+                </span>
+                <span class="text-white font-bold tracking-wider">CRONOS</span>
+            </div>
+        </div>
+    </header>
 
-    <!-- Scaled stage with cinematic zoom effects -->
-    <div class="canvas-stage" id="canvasStage">
-      <canvas id="cursiveCanvas"></canvas>
-    </div>
+    <main class="flex-1 w-full relative flex items-center justify-center z-10 overflow-hidden min-h-0">
+        
+        <!-- Giant Neon Stroke Background Text -->
+        <div class="absolute inset-0 flex items-center justify-center z-0 pointer-events-none select-none overflow-hidden">
+            <h1 class="text-stroke-neon font-black text-[22vw] md:text-[16vw] lg:text-[14rem] text-center whitespace-nowrap transform -translate-y-4 md:-translate-y-12">
+                ULTISAUR
+            </h1>
+        </div>
 
-    <div class="btn-container" id="btnContainer">
-      <button class="enter-btn" id="enterBtn" onclick="handleEnter()">
-        <span>Enter Cave</span>
-        <span class="arrow-icon">→</span>
-      </button>
-    </div>
-  </div>
+        <!-- Floating Mascot Image -->
+        <!-- The drop-shadow in CSS will automatically trace the edges of your transparent PNG -->
+        <div class="relative z-10 h-full w-full flex items-center justify-center pb-[20vh] md:pb-[15vh]">
+            <img 
+                src="IMG_5639.png" 
+                alt="Ultisaur Mascot" 
+                class="float-mascot max-h-[55vh] md:max-h-[60vh] max-w-[85vw] object-contain"
+                onerror="this.src='https://placehold.co/800x800/transparent/39ff14?text=Place+IMG_5639.png+Here'"
+            >
+        </div>
+    </main>
 
-  <script>
-    const canvas = document.getElementById('cursiveCanvas');
-    const ctx = canvas.getContext('2d');
-    const stage = document.getElementById('canvasStage');
-    const btnContainer = document.getElementById('btnContainer');
+    <footer class="w-full absolute bottom-0 left-0 z-30 glass-panel rounded-t-[2.5rem] pb-8 pt-8 px-6 sm:px-8 shadow-2xl">
+        <!-- Subtle drag handle decorative element -->
+        <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto mb-6"></div>
 
-    let logicalWidth = 1000;
-    let logicalHeight = 300;
+        <div class="max-w-md mx-auto flex flex-col space-y-4 w-full">
+            
+            <!-- Primary Action -->
+            <button class="w-full btn-primary font-extrabold text-[17px] py-4 rounded-2xl active:scale-[0.98] flex items-center justify-center space-x-2">
+                <span>Join the Horde</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </button>
+            
+            <!-- Secondary Action: Connect Wallet -->
+            <button class="w-full btn-secondary font-semibold text-[17px] py-4 rounded-2xl flex items-center justify-center space-x-2 active:scale-[0.98]">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/>
+                    <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/>
+                    <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/>
+                </svg>
+                <span>Connect Wallet</span>
+            </button>
+            
+            <!-- Tertiary Action -->
+            <button class="w-full bg-transparent font-medium text-[15px] text-gray-400 py-2 rounded-2xl hover:text-white active:scale-[0.98] transition-colors duration-200">
+                Continue as guest
+            </button>
 
-    function resizeCanvas() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const rect = stage.getBoundingClientRect();
-      
-      logicalWidth = rect.width;
-      logicalHeight = rect.height;
+            <!-- Legal Text -->
+            <div class="pt-2 text-center">
+                <p class="text-[11px] text-gray-500/80 leading-relaxed font-medium">
+                    By connecting, you agree to the <br class="sm:hidden">
+                    <a href="#" class="text-gray-400 hover:text-brand-cyan transition-colors">Terms of Service</a> & 
+                    <a href="#" class="text-gray-400 hover:text-brand-cyan transition-colors">Privacy Policy</a>.
+                </p>
+            </div>
+        </div>
+    </footer>
 
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-
-      ctx.resetTransform();
-      ctx.scale(dpr, dpr);
-    }
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Preload cursive font
-    document.fonts.load("italic 110px 'Alex Brush'").then(() => {
-      runPenAnimation();
-    }).catch(() => {
-      runPenAnimation();
-    });
-
-    // Realistic Metallic Fountain Pen Nib
-    function drawFountainPenNib(ctx, x, y, angle, scale, opacity = 1) {
-      ctx.save();
-      ctx.globalAlpha = opacity;
-      ctx.translate(x, y);
-      ctx.rotate(angle);
-      ctx.scale(scale, scale);
-
-      // Nib cast shadow
-      ctx.beginPath();
-      ctx.ellipse(3, 4, 10, 4, 0, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(0, 0, 0, 0.45)";
-      ctx.fill();
-
-      // Grip Section
-      ctx.beginPath();
-      ctx.moveTo(-16, -110);
-      ctx.lineTo(16, -110);
-      ctx.lineTo(13, -75);
-      ctx.lineTo(-13, -75);
-      ctx.closePath();
-      const gripGrad = ctx.createLinearGradient(-16, 0, 16, 0);
-      gripGrad.addColorStop(0, "#18181b");
-      gripGrad.addColorStop(0.5, "#3f3f46");
-      gripGrad.addColorStop(1, "#18181b");
-      ctx.fillStyle = gripGrad;
-      ctx.fill();
-
-      // Gold Trim Ring
-      ctx.beginPath();
-      ctx.rect(-13.5, -75, 27, 8);
-      const ringGrad = ctx.createLinearGradient(-13, 0, 13, 0);
-      ringGrad.addColorStop(0, "#b45309");
-      ringGrad.addColorStop(0.3, "#fde047");
-      ringGrad.addColorStop(0.7, "#fbbf24");
-      ringGrad.addColorStop(1, "#78350f");
-      ctx.fillStyle = ringGrad;
-      ctx.fill();
-
-      // Steel Nib Blade
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(-5, -20, -14, -38, -12, -67);
-      ctx.lineTo(12, -67);
-      ctx.bezierCurveTo(14, -38, 5, -20, 0, 0);
-      ctx.closePath();
-
-      const nibGrad = ctx.createLinearGradient(-14, 0, 14, 0);
-      nibGrad.addColorStop(0, "#94a3b8");
-      nibGrad.addColorStop(0.2, "#f8fafc");
-      nibGrad.addColorStop(0.5, "#cbd5e1");
-      nibGrad.addColorStop(0.8, "#f1f5f9");
-      nibGrad.addColorStop(1, "#64748b");
-      ctx.fillStyle = nibGrad;
-      ctx.fill();
-
-      // Gold Filigree Inlay
-      ctx.beginPath();
-      ctx.moveTo(0, -6);
-      ctx.bezierCurveTo(-3, -22, -8, -36, -7, -56);
-      ctx.lineTo(7, -56);
-      ctx.bezierCurveTo(8, -36, 3, -22, 0, -6);
-      ctx.closePath();
-      const inlayGrad = ctx.createLinearGradient(-8, 0, 8, 0);
-      inlayGrad.addColorStop(0, "#d97706");
-      inlayGrad.addColorStop(0.5, "#fef08a");
-      inlayGrad.addColorStop(1, "#b45309");
-      ctx.fillStyle = inlayGrad;
-      ctx.fill();
-
-      // Slit & Breather
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.lineTo(0, -38);
-      ctx.strokeStyle = "#09090b";
-      ctx.lineWidth = 1;
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.arc(0, -38, 2.2, 0, Math.PI * 2);
-      ctx.fillStyle = "#0c0a09";
-      ctx.fill();
-
-      // Ink droplet glow at the tip
-      ctx.beginPath();
-      ctx.arc(0, 0, 2, 0, Math.PI * 2);
-      ctx.fillStyle = "#f3e8ff";
-      ctx.shadowColor = "#c084fc";
-      ctx.shadowBlur = 10;
-      ctx.fill();
-
-      ctx.restore();
-    }
-
-    function runPenAnimation() {
-      // Both in matching continuous natural cursive
-      const part1 = "welcome to ";
-      const part2 = "cave";
-
-      const time1 = 1300; // writing "welcome to "
-      const time2 = 950;  // writing "cave"
-      const liftTime = 300; // pen lift
-      const totalTime = time1 + time2;
-      const startTime = performance.now();
-
-      function frame(now) {
-        const elapsed = now - startTime;
-        const progressTotal = Math.min(elapsed / totalTime, 1);
-
-        ctx.clearRect(0, 0, logicalWidth, logicalHeight);
-
-        // Fluid font scaling with viewport
-        const scale = Math.min(logicalWidth / 750, 1.25);
-        const fontSize = Math.max(54, Math.round(98 * scale));
-
-        ctx.font = `italic 400 ${fontSize}px 'Alex Brush', cursive`;
-        const width1 = ctx.measureText(part1).width;
-        const width2 = ctx.measureText(part2).width;
-
-        const totalWidth = width1 + width2;
-        const startX = (logicalWidth - totalWidth) / 2;
-        const baselineY = logicalHeight / 2 + (fontSize * 0.22);
-
-        // 1. Draw "welcome to "
-        const p1 = Math.min(elapsed / time1, 1);
-        if (p1 > 0) {
-          ctx.save();
-          ctx.beginPath();
-          ctx.rect(startX - 10, 0, (width1 + 10) * p1, logicalHeight);
-          ctx.clip();
-
-          ctx.font = `italic 400 ${fontSize}px 'Alex Brush', cursive`;
-          ctx.textBaseline = "alphabetic";
-
-          ctx.shadowColor = "rgba(168, 85, 247, 0.25)";
-          ctx.shadowBlur = 8;
-
-          ctx.strokeStyle = "rgba(255, 255, 255, 0.35)";
-          ctx.lineWidth = 1.4;
-          ctx.strokeText(part1, startX, baselineY);
-
-          ctx.fillStyle = "#e2e8f0";
-          ctx.fillText(part1, startX, baselineY);
-          ctx.restore();
-        }
-
-        // 2. Draw "cave" in the same elegant script with luminous ink
-        if (elapsed > time1) {
-          const p2 = Math.min((elapsed - time1) / time2, 1);
-          const caveX = startX + width1;
-
-          ctx.save();
-          ctx.beginPath();
-          ctx.rect(caveX - 5, 0, (width2 + 25) * p2, logicalHeight);
-          ctx.clip();
-
-          ctx.font = `italic 400 ${fontSize}px 'Alex Brush', cursive`;
-          ctx.textBaseline = "alphabetic";
-
-          // Signature Glow
-          ctx.shadowColor = "#c084fc";
-          ctx.shadowBlur = 20;
-
-          // Double layered stroke for calligraphic depth
-          ctx.strokeStyle = "#a855f7";
-          ctx.lineWidth = 3.6;
-          ctx.strokeText(part2, caveX, baselineY);
-
-          ctx.strokeStyle = "#e9d5ff";
-          ctx.lineWidth = 1.6;
-          ctx.strokeText(part2, caveX, baselineY);
-
-          // Platinum to violet gradient ink
-          const grad = ctx.createLinearGradient(caveX, baselineY - fontSize * 0.7, caveX, baselineY);
-          grad.addColorStop(0, "#ffffff");
-          grad.addColorStop(0.65, "#f5f3ff");
-          grad.addColorStop(1, "#c084fc");
-          ctx.fillStyle = grad;
-          ctx.fillText(part2, caveX, baselineY);
-
-          ctx.restore();
-        }
-
-        // 3. Move the vintage fountain pen nib
-        let penX, penY, penAngle = 0.40;
-        let penOpacity = 1;
-
-        if (elapsed <= totalTime) {
-          if (elapsed <= time1) {
-            penX = startX + width1 * p1;
-            penY = baselineY - (fontSize * 0.14) + Math.sin(p1 * 24) * (7 * scale);
-            penAngle += Math.cos(p1 * 24) * 0.08;
-          } else {
-            const p2 = (elapsed - time1) / time2;
-            penX = startX + width1 + width2 * p2;
-            penY = baselineY - (fontSize * 0.14) + Math.sin(p2 * 22) * (7 * scale);
-            penAngle += Math.cos(p2 * 22) * 0.08;
-          }
-
-          drawFountainPenNib(ctx, penX, penY, penAngle, scale * 1.15, penOpacity);
-        } else if (elapsed <= totalTime + liftTime) {
-          // Pen lifts smoothly off the glass
-          const liftP = (elapsed - totalTime) / liftTime;
-          penX = startX + totalWidth + (liftP * 12 * scale);
-          penY = baselineY - (fontSize * 0.14) - (liftP * 24 * scale);
-          penAngle = 0.40 - (liftP * 0.12);
-          penOpacity = 1 - liftP;
-
-          drawFountainPenNib(ctx, penX, penY, penAngle, scale * 1.15, penOpacity);
-        }
-
-        if (elapsed <= totalTime + liftTime) {
-          requestAnimationFrame(frame);
-        } else {
-          // Final cinematic focus transition:
-          // 1. Stage zooms slightly forward
-          stage.classList.add('signature-focus');
-
-          // 2. Eases back into rest position after 350ms
-          setTimeout(() => {
-            stage.classList.remove('signature-focus');
-            stage.classList.add('signature-settled');
-
-            // 3. Smoothly reveals the "Enter Cave" button
-            setTimeout(() => {
-              btnContainer.classList.add('show');
-            }, 180);
-          }, 360);
-        }
-      }
-
-      requestAnimationFrame(frame);
-    }
-
-    function handleEnter() {
-      const btn = document.getElementById('enterBtn');
-      btn.innerHTML = '<span>Entering...</span>';
-      btn.style.borderColor = '#22c55e';
-      btn.style.boxShadow = '0 0 32px rgba(34, 197, 94, 0.65)';
-      btn.style.pointerEvents = 'none';
-
-      setTimeout(() => {
-        document.body.style.opacity = '0';
-        document.body.style.filter = 'blur(4px)';
-        setTimeout(() => {
-          window.location.href = 'main.html';
-        }, 220);
-      }, 250);
-    }
-  </script>
 </body>
 </html>
